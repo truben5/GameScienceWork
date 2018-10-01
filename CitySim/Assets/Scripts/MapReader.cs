@@ -33,31 +33,31 @@ class MapReader : MonoBehaviour
         IsReady = true;
 	}
 
-    void Update()
-    {
-        foreach(OSMWay w in ways)
-        {
-            if (w.Visible)
-            {
-                Color c = Color.cyan; // cyan for building
-                if (!w.isBoundary)
-                {
-                    c = Color.red; // red for roads
-                }
+    //void Update()
+    //{
+    //    foreach(OSMWay w in ways)
+    //    {
+    //        if (w.Visible)
+    //        {
+    //            Color c = Color.cyan; // cyan for building
+    //            if (!w.isBoundary)
+    //            {
+    //                c = Color.red; // red for roads
+    //            }
 
-                for (int i= 1; i < w.NodeIDs.Count; i++)
-                {
-                    OSMNode p1 = nodes[w.NodeIDs[i - 1]];
-                    OSMNode p2 = nodes[w.NodeIDs[i]];
+    //            for (int i= 1; i < w.NodeIDs.Count; i++)
+    //            {
+    //                OSMNode p1 = nodes[w.NodeIDs[i - 1]];
+    //                OSMNode p2 = nodes[w.NodeIDs[i]];
 
-                    Vector3 v1 = p1 - bounds.Center;
-                    Vector3 v2 = p2 - bounds.Center;
+    //                Vector3 v1 = p1 - bounds.Center;
+    //                Vector3 v2 = p2 - bounds.Center;
 
-                    Debug.DrawLine(v1, v2, c);
-                }
-            }
-        }
-    }
+    //                Debug.DrawLine(v1, v2, c);
+    //            }
+    //        }
+    //    }
+    //}
 
     void GetWays(XmlNodeList xmlNodeList)
     {

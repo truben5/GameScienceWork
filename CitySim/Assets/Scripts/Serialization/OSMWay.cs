@@ -39,7 +39,7 @@ class OSMWay : BaseOSM
             isBoundary = NodeIDs[0] == NodeIDs[NodeIDs.Count - 1];
         }
 
-        XmlNodeList tags = node.SelectNodes("tags");
+        XmlNodeList tags = node.SelectNodes("tag");
         foreach(XmlNode t in tags)
         {
             string key = GetAttribute<string>("k", t.Attributes);
