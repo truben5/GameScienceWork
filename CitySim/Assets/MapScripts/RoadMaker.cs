@@ -73,7 +73,6 @@ class RoadMaker : InfrastructureBehaviour
                 indices.Add(idx4);
                 indices.Add(idx2);
             
-
             }
 
             mf.mesh.vertices = vectors.ToArray();
