@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using UnityEngine;
 
 class OSMWay : BaseOSM
 {
@@ -17,6 +18,12 @@ class OSMWay : BaseOSM
     public bool IsRoad { get; private set; }
 
     public float Height { get; private set; }
+
+    public string Name { get; private set; }
+
+    public int Lanes { get; private set; }
+
+    public bool IsRailway = false;
 
     public OSMWay(XmlNode node)
     {
@@ -58,6 +65,19 @@ class OSMWay : BaseOSM
             else if(key == "highway")
             {
                 IsRoad = true;
+            }
+            else if (key == "lanes")
+            {
+                Lanes = GetAttribute<int>("v", t.Attributes);
+            }
+            else if (key == "name")
+            {
+                Name = GetAttribute<string>("v", t.Attributes);
+            }
+            else if (key == "railway")
+            {
+                IsRailway = true;
+                //Debug.Log("railway");
             }
         }
     }

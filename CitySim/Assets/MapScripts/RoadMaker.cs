@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 class RoadMaker : InfrastructureBehaviour
@@ -14,9 +15,10 @@ class RoadMaker : InfrastructureBehaviour
         }
 
         // TODO: Add Lanes
-        foreach (var way in map.ways.FindAll((w) => { return w.IsRoad; }))
+        foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
         {
             GameObject go = new GameObject();
+            go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" : way.Name;
             Vector3 localOrigin = GetCenter(way);
             go.transform.position = localOrigin - map.bounds.Center;
 
@@ -38,7 +40,7 @@ class RoadMaker : InfrastructureBehaviour
                 Vector3 s2 = p2 - localOrigin;
 
                 Vector3 diff = (s2 - s1).normalized;
-                var cross = Vector3.Cross(diff, Vector3.up) * 2.0f; // 2 meters = width of lane
+                var cross = Vector3.Cross(diff, Vector3.up) * 2.0f; // Add lanes here
 
                 Vector3 v1 = s1 + cross;
                 Vector3 v2 = s1 - cross;
