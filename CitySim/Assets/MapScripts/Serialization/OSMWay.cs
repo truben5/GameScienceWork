@@ -29,6 +29,7 @@ class OSMWay : BaseOSM
     {
         NodeIDs = new List<ulong>();
         Height = 3.0f;
+        Lanes = 1;
 
         ID = GetAttribute<ulong>("id", node.Attributes);
         Visible = GetAttribute<bool>("visible", node.Attributes);

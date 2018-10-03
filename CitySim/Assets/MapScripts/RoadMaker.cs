@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 class RoadMaker : InfrastructureBehaviour
 { 
@@ -37,15 +38,25 @@ class RoadMaker : InfrastructureBehaviour
                 OSMNode p2 = map.nodes[way.NodeIDs[i]];
 
                 Vector3 s1 = p1 - localOrigin;
+                // Need to average here
                 Vector3 s2 = p2 - localOrigin;
+                //Vector3 s3 = Vector3.zero;
+
+
 
                 Vector3 diff = (s2 - s1).normalized;
-                var cross = Vector3.Cross(diff, Vector3.up) * 2.0f; // Add lanes here
+                var cross = Vector3.Cross(diff, Vector3.up) * 3.0f * way.Lanes; // Add lanes here
+
+                //if (i < way.NodeIDs.Count - 1)
+                //{
+                //    s3 += map.nodes[way.NodeIDs[i + 1]] - localOrigin;
+                //}
 
                 Vector3 v1 = s1 + cross;
                 Vector3 v2 = s1 - cross;
                 Vector3 v3 = s2 + cross;
                 Vector3 v4 = s2 - cross;
+
 
                 vectors.Add(v1);
                 vectors.Add(v2);
@@ -78,6 +89,8 @@ class RoadMaker : InfrastructureBehaviour
             mf.mesh.vertices = vectors.ToArray();
             mf.mesh.normals = normals.ToArray();
             mf.mesh.triangles = indices.ToArray();
+
+            NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
 
             yield return null;
 
