@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 30418748}
   - component: {fileID: 30418747}
   - component: {fileID: 30418750}
+  - component: {fileID: 30418749}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13fffa67725511478eb04b3acc81404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceFile: ManhattanTip
+  resourceFile: Rutgers
 --- !u!4 &30418748
 Transform:
   m_ObjectHideFlags: 0
@@ -155,6 +156,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &30418749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 30418746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea473195455683419693df5629f3ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carPopulation: 0
 --- !u!114 &30418750
 MonoBehaviour:
   m_ObjectHideFlags: 0

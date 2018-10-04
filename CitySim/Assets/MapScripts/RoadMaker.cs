@@ -8,6 +8,10 @@ class RoadMaker : InfrastructureBehaviour
 { 
     public Material roadMaterial;
 
+    private List<Vector3> wayPoints = new List<Vector3>();
+
+    public bool IsReady { get; private set; }
+
     IEnumerator Start()
     {
         while (!map.IsReady)
@@ -19,7 +23,11 @@ class RoadMaker : InfrastructureBehaviour
         foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
         {
             GameObject go = new GameObject();
+            // Name road if name is available
             go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" : way.Name;
+            // Set map to parent
+            go.transform.parent = map.transform;
+
             Vector3 localOrigin = GetCenter(way);
             go.transform.position = localOrigin - map.bounds.Center;
 
@@ -42,7 +50,7 @@ class RoadMaker : InfrastructureBehaviour
                 Vector3 s2 = p2 - localOrigin;
                 //Vector3 s3 = Vector3.zero;
 
-
+                
 
                 Vector3 diff = (s2 - s1).normalized;
                 var cross = Vector3.Cross(diff, Vector3.up) * 3.0f * way.Lanes; // Add lanes here
@@ -57,6 +65,9 @@ class RoadMaker : InfrastructureBehaviour
                 Vector3 v3 = s2 + cross;
                 Vector3 v4 = s2 - cross;
 
+                Debug.Log(localOrigin);
+                wayPoints.Add(s1);
+                wayPoints.Add(s2);
 
                 vectors.Add(v1);
                 vectors.Add(v2);
@@ -95,5 +106,21 @@ class RoadMaker : InfrastructureBehaviour
             yield return null;
 
         }
+        IsReady = true;
+        Debug.Log("Completed Road Rendering");
+    }
+
+    void OnDrawGizmos()
+    {
+        if (IsReady == true)
+        {
+            Debug.Log("making gizmos");
+            Gizmos.color = Color.red;
+            foreach (var point in wayPoints)
+            {
+                Gizmos.DrawWireSphere(point, 3f);
+            }
+        }
+        
     }
 }
