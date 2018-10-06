@@ -25,6 +25,7 @@ class OSMNode : BaseOSM
         Latitude = GetAttribute<float>("lat", node.Attributes);
         Longitude = GetAttribute<float>("lon", node.Attributes);
 
+        // Transfer this for waypoints?
         X = (float)MercatorProjection.lonToX(Longitude);
         Y = (float)MercatorProjection.latToY(Latitude);
 	}

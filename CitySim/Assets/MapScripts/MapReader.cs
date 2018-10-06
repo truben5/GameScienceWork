@@ -35,7 +35,7 @@ class MapReader : MonoBehaviour
 
     //void Update()
     //{
-    //    foreach(OSMWay w in ways)
+    //    foreach (OSMWay w in ways)
     //    {
     //        if (w.Visible)
     //        {
@@ -45,7 +45,7 @@ class MapReader : MonoBehaviour
     //                c = Color.red; // red for roads
     //            }
 
-    //            for (int i= 1; i < w.NodeIDs.Count; i++)
+    //            for (int i = 1; i < w.NodeIDs.Count; i++)
     //            {
     //                OSMNode p1 = nodes[w.NodeIDs[i - 1]];
     //                OSMNode p2 = nodes[w.NodeIDs[i]];
