@@ -44,15 +44,28 @@ class RoadMaker : InfrastructureBehaviour
             {
                 OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
                 OSMNode p2 = map.nodes[way.NodeIDs[i]];
-
-                Vector3 s1 = p1 - localOrigin;
-                // Need to average here
-                Vector3 s2 = p2 - localOrigin;
-                //Vector3 s3 = Vector3.zero;
-
+   
                 
 
-                Vector3 diff = (s2 - s1).normalized;
+                Vector3 s1 = p1 - localOrigin;
+                Vector3 s2 = p2 - localOrigin;
+                Vector3 s3 = Vector3.zero;
+
+                //int avg = 1;
+                Vector3 diff = Vector3.zero;
+
+                //if (i > 0 && i < way.NodeIDs.Count - 1)
+                //{
+                //    avg = 2;
+                //    s3 = map.nodes[way.NodeIDs[i + 1]];
+                //    diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
+                //}
+                //else
+                //{
+                    diff = (s2 - s1).normalized;
+                //}
+
+                //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
                 var cross = Vector3.Cross(diff, Vector3.up) * 3.0f * way.Lanes; // Add lanes here
 
                 Vector3 v1 = s1 + cross;
@@ -104,17 +117,17 @@ class RoadMaker : InfrastructureBehaviour
         Debug.Log("Completed Road Rendering");
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    if (IsReady == true)
-    //    {
-    //        //Debug.Log("making gizmos");
-    //        Gizmos.color = Color.red;
-    //        foreach (var point in wayPoints)
-    //        {
-    //            Gizmos.DrawWireSphere(point, 3f);
-    //        }
-    //    }
-        
-    //}
+    void OnDrawGizmos()
+    {
+        if (IsReady == true)
+        {
+            //Debug.Log("making gizmos");
+            Gizmos.color = Color.red;
+            foreach (var point in wayPoints)
+            {
+                Gizmos.DrawWireSphere(point, 1f);
+            }
+        }
+
+    }
 }
