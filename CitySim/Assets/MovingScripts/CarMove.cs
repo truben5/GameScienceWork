@@ -11,24 +11,31 @@ public class CarMove : MonoBehaviour {
     int totalPoints;
     int currPoint = 0;
 
-    // Variables dealing with movement
+    // Variables dealing with sensors
     public float sensorLength = 25f;
     public float frontSensorPos = -1.7f;
     public float frontSideSensorPos = 1.1f;
-    public float frontSensorAngle = 30;
+    public float frontSensorAngle = 40;
 
+    // Variables dealing with movement
+    public float maxSteerAngle = 40f;
+    public float maxSpeed = 10;
 
-    NavMeshAgent navMeshAgent;
-    Rigidbody rb;
+    public WheelCollider WheelFL;
+    public WheelCollider WheelFR;
+
+    // Variables dealing with NavMeshAgent
+    public NavMeshAgent navMeshAgent;
+    public float maxNavSpeed = 1f;
 
 	// Use this for initialization
 	void Start () {
-        rb = this.GetComponent<Rigidbody>();
-        navMeshAgent = this.GetComponent<NavMeshAgent>();
+        //navMeshAgent = GameObject.Find("Car").transform.GetChild(1).gameObject;
         // Remove navmesh movement
         //navMeshAgent.updatePosition = false;
         //navMeshAgent.updateRotation = false;
-        
+        navMeshAgent.speed = maxNavSpeed;
+
         // Store all wayPoints in path
         GameObject path = GameObject.Find("Path");
         totalPoints = path.transform.childCount;
@@ -43,43 +50,62 @@ public class CarMove : MonoBehaviour {
         }
         else
         {
-         //   navMeshAgent.SetDestination(wayPoints[0].position);
+            navMeshAgent.SetDestination(wayPoints[0].position);
+            //Debug.Log(navMeshAgent.GetComponent<NavMeshAgent>().pathEndPosition);
         }
 	}
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void Update () {
+        navMeshAgent.transform.position = navMeshAgent.nextPosition;
         CheckWayPointDistance();
-        MoveForward(wayPoints[currPoint].position);
-        Sensor();
 	}
+
+    void FixedUpdate()
+    {
+        if (!(currPoint >= totalPoints))
+        {
+            Steer();
+            Drive();
+        }
+        Sensor();
+    }
 
     // Function to check if reached waypoint and keep track of current waypoint we are moving towards
     private void CheckWayPointDistance()
     {
-        //if (currPoint >= totalPoints)
-        //{
-            //navMeshAgent.isStopped = true;
-        //}
-        //else if (Vector3.Distance(transform.position, wayPoints[currPoint].position) < 2.0f)
-        //{
-        //    currPoint++;
-        //    if (currPoint == totalPoints)
-        //    {
-        //        return;
-        //    }
-        //    //navMeshAgent.SetDestination(wayPoints[currPoint].position);
-        //}
+        //Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint].position));
+        if (currPoint >= totalPoints)
+        {
+            navMeshAgent.isStopped = true;
+        }
+        else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint].position) < 2.0f)
+        {
+            //Debug.Log("in here");
+            currPoint++;
+            if (currPoint == totalPoints)
+            {
+                return;
+            }
+            Debug.Log("moving to next waypoint" + wayPoints[currPoint].position);
+            navMeshAgent.SetDestination(wayPoints[currPoint].position);
+        }
     }
 
-    private void MoveForward(Vector3 wayPoint)
+    private void Steer()
     {
-        Vector3 vect = transform.InverseTransformPoint(wayPoint);
-        //rb.MovePosition(vect);
-        transform.LookAt(vect);
-        transform.Translate(0, 0, .01f);
-        Vector3 movement = transform.forward * Time.deltaTime * .5f;
-        //navMeshAgent.Move(movement);
+        Vector3 relativeVect = transform.InverseTransformPoint(navMeshAgent.nextPosition);
+        float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
+        WheelFL.steerAngle = newSteer;
+        WheelFR.steerAngle = newSteer;
+        //navMeshAgent.Move(relativeVect);
+
+    }
+
+    private void Drive()
+    {
+        WheelFL.motorTorque = 90f;
+        WheelFR.motorTorque = 90f;
     }
 
     private void Sensor()
