@@ -11,30 +11,44 @@ public class CarMove : MonoBehaviour {
     int totalPoints;
     int currPoint = 0;
 
+
     // Variables dealing with sensors
+    [Header("Sensors")]
     public float sensorLength = 25f;
     public float frontSensorPos = -1.7f;
     public float frontSideSensorPos = 1.1f;
     public float frontSensorAngle = 40;
 
     // Variables dealing with movement
+    [Header("Car Movement")]
     public float maxSteerAngle = 40f;
-    public float maxSpeed = 10;
+    public float maxSpeed = 100f;
+    public float maxAccelTorque = 100f;
+    public float maxDecelTorque = -150f;
+    public float maxBrakeTorque = 3500f;
+    public bool isBraking = false;
+    private float currentSpeed;
 
-    public WheelCollider WheelFL;
-    public WheelCollider WheelFR;
+    public WheelCollider wheelFL;
+    public WheelCollider wheelFR;
+    public WheelCollider wheelRL;
+    public WheelCollider wheelRR;
+
+    public Vector3 centerOfMass;
 
     // Variables dealing with NavMeshAgent
+    [Header("NavMeshAgent")]
     public NavMeshAgent navMeshAgent;
     public float maxNavSpeed = 1f;
 
 	// Use this for initialization
 	void Start () {
-        //navMeshAgent = GameObject.Find("Car").transform.GetChild(1).gameObject;
         // Remove navmesh movement
-        //navMeshAgent.updatePosition = false;
-        //navMeshAgent.updateRotation = false;
+        navMeshAgent.updatePosition = false;
+        navMeshAgent.updateRotation = false;
         navMeshAgent.speed = maxNavSpeed;
+
+        GetComponent<Rigidbody>().centerOfMass = centerOfMass;
 
         // Store all wayPoints in path
         GameObject path = GameObject.Find("Path");
@@ -96,16 +110,52 @@ public class CarMove : MonoBehaviour {
     {
         Vector3 relativeVect = transform.InverseTransformPoint(navMeshAgent.nextPosition);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
-        WheelFL.steerAngle = newSteer;
-        WheelFR.steerAngle = newSteer;
+        wheelFL.steerAngle = newSteer;
+        wheelFR.steerAngle = newSteer;
         //navMeshAgent.Move(relativeVect);
 
     }
 
     private void Drive()
     {
-        WheelFL.motorTorque = 90f;
-        WheelFR.motorTorque = 90f;
+        currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 100;
+        Debug.Log("Current speed is: " + currentSpeed);
+        //Debug.Log("isbrake is " + isBraking);
+        if (currentSpeed < maxSpeed && !isBraking)
+        {
+            //Debug.Log("accelerate");
+            wheelFL.motorTorque = maxAccelTorque;
+            wheelFR.motorTorque = maxAccelTorque;
+        }
+        else if (isBraking && currentSpeed > 5)
+        {
+            //Debug.Log("decelerate");
+            wheelFL.motorTorque = maxDecelTorque;
+            wheelFR.motorTorque = maxDecelTorque;
+        }
+        else
+        {
+            wheelFL.motorTorque = 0f;
+            wheelFR.motorTorque = 0f;
+        }
+
+        
+    }
+
+    // Function to apply braking torque on wheels
+    private void Brake()
+    {
+        if (isBraking)
+        {
+            Debug.Log("Braking");
+            wheelRL.brakeTorque = maxBrakeTorque;
+            wheelRR.brakeTorque = maxBrakeTorque;
+        }
+        else
+        {
+            wheelRL.brakeTorque = 0f;
+            wheelRR.brakeTorque = 0f;
+        }
     }
 
     private void Sensor()

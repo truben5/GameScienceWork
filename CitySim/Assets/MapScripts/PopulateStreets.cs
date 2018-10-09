@@ -4,7 +4,7 @@ using UnityEngine;
 
 class PopulateStreets : MonoBehaviour {
 
-    public int carPopulation;
+    public int carPopulation = 100;
     protected RoadMaker roadMaker;
 
 	// Use this for initialization
