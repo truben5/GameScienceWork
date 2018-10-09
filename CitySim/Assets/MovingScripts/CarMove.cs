@@ -28,6 +28,7 @@ public class CarMove : MonoBehaviour {
     public float maxBrakeTorque = 3500f;
     public bool isBraking = false;
     private float currentSpeed;
+    private bool sharpTurn = false;
 
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;
@@ -40,6 +41,8 @@ public class CarMove : MonoBehaviour {
     [Header("NavMeshAgent")]
     public NavMeshAgent navMeshAgent;
     public float maxNavSpeed = 1f;
+    public float maxDistFromCar = 15f;
+    public float minDistFromCar = 3f;
 
 	// Use this for initialization
 	void Start () {
@@ -72,6 +75,7 @@ public class CarMove : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         navMeshAgent.transform.position = navMeshAgent.nextPosition;
+        CheckCarDistance();
         CheckWayPointDistance();
 	}
 
@@ -106,10 +110,40 @@ public class CarMove : MonoBehaviour {
         }
     }
 
+    private void CheckCarDistance()
+    {
+        float carDist = Vector3.Distance(navMeshAgent.transform.position, GetComponent<Rigidbody>().transform.position);
+        if (carDist > maxDistFromCar)
+        {
+            //Debug.Log("Too far");
+            navMeshAgent.velocity = navMeshAgent.velocity / 2f;
+            //navMeshAgent.velocity = GetComponent<Rigidbody>().velocity;
+            navMeshAgent.speed = maxNavSpeed / 2f;
+        }
+        else if (carDist < minDistFromCar)
+        {
+            //Debug.Log("Too close");
+            navMeshAgent.velocity = navMeshAgent.velocity * 1.7f;
+            //Debug.Log(GetComponent<Rigidbody>().velocity + " vs " + navMeshAgent.velocity);
+            //navMeshAgent.velocity = na;
+            //navMeshAgent.speed = maxNavSpeed * 1.5f;
+            //maxSpeed += 1;
+            navMeshAgent.speed = maxNavSpeed * 1.5f;
+        }
+    }
+
     private void Steer()
     {
         Vector3 relativeVect = transform.InverseTransformPoint(navMeshAgent.nextPosition);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
+        if (newSteer > 10f || newSteer < -10f)
+        {
+            sharpTurn = true;
+        }
+        else
+        {
+            sharpTurn = false;
+        }
         wheelFL.steerAngle = newSteer;
         wheelFR.steerAngle = newSteer;
         //navMeshAgent.Move(relativeVect);
@@ -118,20 +152,27 @@ public class CarMove : MonoBehaviour {
 
     private void Drive()
     {
-        currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 100;
-        Debug.Log("Current speed is: " + currentSpeed);
+        currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
+        //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
-        if (currentSpeed < maxSpeed && !isBraking)
+        if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
             //Debug.Log("accelerate");
-            wheelFL.motorTorque = maxAccelTorque;
-            wheelFR.motorTorque = maxAccelTorque;
+            wheelFL.motorTorque += maxAccelTorque / 10;
+            wheelFR.motorTorque += maxAccelTorque / 10;
         }
-        else if (isBraking && currentSpeed > 5)
+        else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
             //Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
+        }
+        else if (sharpTurn)
+        {
+            wheelFL.motorTorque = maxAccelTorque / 8;
+            wheelFR.motorTorque = maxAccelTorque / 8;
+            //wheelFL.motorTorque = maxDecelTorque;
+            //wheelFR.motorTorque = maxDecelTorque;
         }
         else
         {
@@ -147,7 +188,7 @@ public class CarMove : MonoBehaviour {
     {
         if (isBraking)
         {
-            Debug.Log("Braking");
+            //Debug.Log("Braking");
             wheelRL.brakeTorque = maxBrakeTorque;
             wheelRR.brakeTorque = maxBrakeTorque;
         }
