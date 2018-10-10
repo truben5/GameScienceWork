@@ -58,7 +58,7 @@ class RoadMaker : InfrastructureBehaviour
                 //{
                 //    avg = 2;
                 //    s3 = map.nodes[way.NodeIDs[i + 1]];
-                //    diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
+                //    diff = ((s2 - s1) + (s3 - s2)).normalized / avg;
                 //}
                 //else
                 //{
@@ -92,6 +92,22 @@ class RoadMaker : InfrastructureBehaviour
                 idx2 = vectors.Count - 3;
                 idx1 = vectors.Count - 4;
 
+                if (i > 1)
+                {
+                    int idPrev4, idPrev3;
+                    idPrev4 = vectors.Count - 5;
+                    idPrev3 = vectors.Count - 6;
+                    
+                    //Triangles to connect breaks
+                    indices.Add(idx1);
+                    indices.Add(idx2);
+                    indices.Add(idPrev4);
+
+                    indices.Add(idPrev3);
+                    indices.Add(idx1);
+                    indices.Add(idx2);
+                }
+
                 // First Triangle
                 indices.Add(idx1);
                 indices.Add(idx3);
@@ -101,7 +117,7 @@ class RoadMaker : InfrastructureBehaviour
                 indices.Add(idx3);
                 indices.Add(idx4);
                 indices.Add(idx2);
-            
+
             }
 
             mf.mesh.vertices = vectors.ToArray();
