@@ -8,7 +8,8 @@ class RoadMaker : InfrastructureBehaviour
 { 
     public Material roadMaterial;
 
-    private List<Vector3> wayPoints = new List<Vector3>();
+    [SerializeField]
+    public  List<Vector3> wayPoints = new List<Vector3>();
 
     public bool IsReady { get; private set; }
 
@@ -33,6 +34,7 @@ class RoadMaker : InfrastructureBehaviour
 
             MeshFilter mf = go.AddComponent<MeshFilter>();
             MeshRenderer mr = go.AddComponent<MeshRenderer>();
+            MeshCollider mc = go.AddComponent<MeshCollider>();
 
             mr.material = roadMaterial;
 
@@ -66,7 +68,7 @@ class RoadMaker : InfrastructureBehaviour
                 //}
 
                 //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
-                var cross = Vector3.Cross(diff, Vector3.up) * 3.0f * way.Lanes; // Add lanes here
+                var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
 
                 Vector3 v1 = s1 + cross;
                 Vector3 v2 = s1 - cross;
@@ -97,7 +99,7 @@ class RoadMaker : InfrastructureBehaviour
                     int idPrev4, idPrev3;
                     idPrev4 = vectors.Count - 5;
                     idPrev3 = vectors.Count - 6;
-                    
+
                     //Triangles to connect breaks
                     indices.Add(idx1);
                     indices.Add(idx2);
@@ -125,6 +127,7 @@ class RoadMaker : InfrastructureBehaviour
             mf.mesh.triangles = indices.ToArray();
 
             NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
+            surface.BuildNavMesh();
 
             yield return null;
 
