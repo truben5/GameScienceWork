@@ -34,7 +34,10 @@ class RoadMaker : InfrastructureBehaviour
 
             MeshFilter mf = go.AddComponent<MeshFilter>();
             MeshRenderer mr = go.AddComponent<MeshRenderer>();
-            MeshCollider mc = go.AddComponent<MeshCollider>();
+            //BoxCollider bx = go.AddComponent<BoxCollider>();
+            //MeshCollider mc = go.AddComponent<MeshCollider>();
+            //mc.convex = true;
+            //mc.sharedMesh = mf.mesh;
 
             mr.material = roadMaterial;
 

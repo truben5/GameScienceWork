@@ -7,7 +7,8 @@ using UnityEngine.AI;
 public class CarMove : MonoBehaviour {
 
     // Variables dealing with waypoints
-    List<Transform> wayPoints = new List<Transform>();
+    //List<Transform> wayPoints = new List<Transform>();
+    public Vector3 destination;
     int totalPoints;
     int currPoint = 0;
 
@@ -29,6 +30,7 @@ public class CarMove : MonoBehaviour {
     public bool isBraking = false;
     private float currentSpeed;
     private bool sharpTurn = false;
+    private bool reachedDest = false;
 
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;
@@ -54,12 +56,12 @@ public class CarMove : MonoBehaviour {
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
 
         // Store all wayPoints in path
-        GameObject path = GameObject.Find("Path");
-        totalPoints = path.transform.childCount;
-        for (int i = 0; i < totalPoints; i++)
-        {
-            wayPoints.Add(path.transform.GetChild(i));
-        }
+        //GameObject path = GameObject.Find("Path");
+        //totalPoints = path.transform.childCount;
+        //for (int i = 0; i < totalPoints; i++)
+        //{
+        //    wayPoints.Add(path.transform.GetChild(i));
+        //}
 
         if(navMeshAgent == null)
         {
@@ -67,13 +69,15 @@ public class CarMove : MonoBehaviour {
         }
         else
         {
-            navMeshAgent.SetDestination(wayPoints[0].position);
+            navMeshAgent.SetDestination(destination);
+            //navMeshAgent.SetDestination(wayPoints[0].position);
             //Debug.Log(navMeshAgent.GetComponent<NavMeshAgent>().pathEndPosition);
         }
 	}
 
     // Update is called once per frame
     void Update () {
+        //Debug.Log("update");
         navMeshAgent.transform.position = navMeshAgent.nextPosition;
         CheckCarDistance();
         CheckWayPointDistance();
@@ -81,10 +85,16 @@ public class CarMove : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (!(currPoint >= totalPoints))
+        //Debug.Log("Fixed update");
+        if (!reachedDest)
         {
             Steer();
             Drive();
+        }
+        else
+        {
+            wheelFL.brakeTorque = maxBrakeTorque;
+            wheelFR.brakeTorque = maxBrakeTorque;
         }
         Sensor();
     }
@@ -93,20 +103,23 @@ public class CarMove : MonoBehaviour {
     private void CheckWayPointDistance()
     {
         //Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint].position));
-        if (currPoint >= totalPoints)
-        {
-            navMeshAgent.isStopped = true;
-        }
-        else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint].position) < 2.0f)
+        //if (currPoint >= totalPoints)
+        //{
+        //    navMeshAgent.isStopped = true;
+        //}
+
+        //else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint].position) < 3.0f)
+        if (Vector3.Distance(navMeshAgent.transform.position, destination) < 3.0f)
         {
             //Debug.Log("in here");
             currPoint++;
             if (currPoint == totalPoints)
             {
+                reachedDest = true;
                 return;
             }
-            Debug.Log("moving to next waypoint" + wayPoints[currPoint].position);
-            navMeshAgent.SetDestination(wayPoints[currPoint].position);
+            //Debug.Log("moving to next waypoint" + wayPoints[currPoint].position);
+            //navMeshAgent.SetDestination(wayPoints[currPoint].position);
         }
     }
 
@@ -153,7 +166,7 @@ public class CarMove : MonoBehaviour {
     private void Drive()
     {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
-        //Debug.Log("Current speed is: " + currentSpeed);
+        Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {

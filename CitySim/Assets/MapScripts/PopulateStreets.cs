@@ -22,7 +22,10 @@ class PopulateStreets : MonoBehaviour {
         for (int i=0; i < carPopulation; i++)
         {
             Vector3 pos = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
-            Instantiate(carPrefab, pos, Quaternion.identity);
+            pos.y += 3;
+            GameObject Car = Instantiate(carPrefab, pos, Quaternion.identity);
+            Car.GetComponent<CarMove>().destination = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
+
         }
 	}
 	

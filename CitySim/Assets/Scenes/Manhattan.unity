@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 30418747}
   - component: {fileID: 30418750}
   - component: {fileID: 30418749}
+  - component: {fileID: 30418751}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -167,9 +168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea473195455683419693df5629f3ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carPopulation: 500
+  carPopulation: 20
   roadMaker: {fileID: 30418750}
-  carPrefab: {fileID: 1462631138632814, guid: b1d698b3f8dc77842b2dcd38d00026b0, type: 2}
+  carPrefab: {fileID: 1046722405630948, guid: e58264f5b20749d449b0d63fd5391e7f, type: 2}
 --- !u!114 &30418750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +184,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 6517b2c0f21b0ec48994608b488df398, type: 2}
   wayPoints: []
+--- !u!65 &30418751
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 30418746}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10000, y: 1, z: 10000}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
