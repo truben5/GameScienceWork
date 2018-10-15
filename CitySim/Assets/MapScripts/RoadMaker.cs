@@ -129,6 +129,8 @@ class RoadMaker : InfrastructureBehaviour
             mf.mesh.normals = normals.ToArray();
             mf.mesh.triangles = indices.ToArray();
 
+            
+
             NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
             surface.BuildNavMesh();
 

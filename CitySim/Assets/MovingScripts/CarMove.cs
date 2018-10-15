@@ -166,7 +166,7 @@ public class CarMove : MonoBehaviour {
     private void Drive()
     {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
-        Debug.Log("Current speed is: " + currentSpeed);
+        //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
