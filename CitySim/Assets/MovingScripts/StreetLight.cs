@@ -31,9 +31,17 @@ public class StreetLight : MonoBehaviour {
     [Header("Cycle")]
     private float timer;
     public float cycleTime = 6f;
-	
-	// Update is called once per frame
-	void Update () {
+
+    void Start()
+    {
+        FBot.GetComponent<Renderer>().material = go;
+        BBot.GetComponent<Renderer>().material = go;
+        LTop.GetComponent<Renderer>().material = stop;
+        RTop.GetComponent<Renderer>().material = stop;
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (timer > cycleTime)
         {
             lightChange();
@@ -63,6 +71,33 @@ public class StreetLight : MonoBehaviour {
 
             LBot.GetComponent<Renderer>().material = go;
             LTop.GetComponent<Renderer>().material = off;
+        }
+        else if (RLmode == 2)
+        {
+            Debug.Log("RL go from green to yellow");
+            RLmode = 1;
+            RMid.GetComponent<Renderer>().material = yield;
+            RBot.GetComponent<Renderer>().material = off;
+
+            LMid.GetComponent<Renderer>().material = yield;
+            LBot.GetComponent<Renderer>().material = off;
+
+        }
+        else if (RLmode == 1)
+        {
+            RLmode = 0;
+            FRMode = 2;
+            RMid.GetComponent<Renderer>().material = off;
+            RTop.GetComponent<Renderer>().material = stop;
+
+            LMid.GetComponent<Renderer>().material = off;
+            LTop.GetComponent<Renderer>().material = stop;
+
+            FBot.GetComponent<Renderer>().material = go;
+            FTop.GetComponent<Renderer>().material = off;
+
+            BBot.GetComponent<Renderer>().material = go;
+            BTop.GetComponent<Renderer>().material = off;
         }
         // If Front and back are green change front and back to yellow
         else if (FRMode == 2)

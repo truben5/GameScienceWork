@@ -2870,7 +2870,7 @@ MonoBehaviour:
   go: {fileID: 2100000, guid: f66a2db542e68894dac5d24f691807b3, type: 2}
   yield: {fileID: 2100000, guid: b3e62bbd48c953c4ca654be5759d43bd, type: 2}
   off: {fileID: 2100000, guid: 52e4d489e210da740ab7fdf7161c2ab8, type: 2}
-  cycleTime: 6
+  cycleTime: 3
 --- !u!1 &2124054477
 GameObject:
   m_ObjectHideFlags: 0
