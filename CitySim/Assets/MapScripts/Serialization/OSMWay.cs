@@ -23,6 +23,7 @@ class OSMWay : BaseOSM
 
     public int Lanes { get; private set; }
 
+
     public bool IsRailway = false;
 
     public OSMWay(XmlNode node)
@@ -51,6 +52,7 @@ class OSMWay : BaseOSM
         foreach(XmlNode t in tags)
         {
             string key = GetAttribute<string>("k", t.Attributes);
+            //string val = GetAttribute<string>("v", t.Attributes);
             if (key == "building:levels")
             {
                 Height = 3.0f * GetAttribute<float>("v",t.Attributes);

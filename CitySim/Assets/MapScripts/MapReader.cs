@@ -65,7 +65,6 @@ class MapReader : MonoBehaviour
         {
             OSMWay way = new OSMWay(node);
             ways.Add(way);
-
         }
     }
 

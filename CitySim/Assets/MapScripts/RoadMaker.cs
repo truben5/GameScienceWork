@@ -8,8 +8,10 @@ class RoadMaker : InfrastructureBehaviour
 { 
     public Material roadMaterial;
 
-    [SerializeField]
+    [System.NonSerialized]
     public  List<Vector3> wayPoints = new List<Vector3>();
+    [System.NonSerialized]
+    public List<Vector3> stopLights = new List<Vector3>();
 
     public bool IsReady { get; private set; }
 
@@ -23,6 +25,7 @@ class RoadMaker : InfrastructureBehaviour
         // TODO: Add Lanes
         foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
         {
+
             GameObject go = new GameObject();
             // Name road if name is available
             go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" : way.Name;
@@ -49,8 +52,7 @@ class RoadMaker : InfrastructureBehaviour
             {
                 OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
                 OSMNode p2 = map.nodes[way.NodeIDs[i]];
-   
-                
+
 
                 Vector3 s1 = p1 - localOrigin;
                 Vector3 s2 = p2 - localOrigin;
@@ -80,6 +82,14 @@ class RoadMaker : InfrastructureBehaviour
 
                 // Add node location to waypoint
                 wayPoints.Add(p1 - map.bounds.Center);
+
+                // Add node locations to stoplights
+                if (p1.IsStreetLight)
+                {
+                    //Debug.Log("light");
+                    stopLights.Add(p1 - map.bounds.Center);
+                }
+
 
                 vectors.Add(v1);
                 vectors.Add(v2);
@@ -132,11 +142,12 @@ class RoadMaker : InfrastructureBehaviour
             
 
             NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
-            surface.BuildNavMesh();
+            //surface.BuildNavMesh();
 
             yield return null;
 
         }
+
         IsReady = true;
         Debug.Log("Completed Road Rendering");
     }
@@ -148,6 +159,12 @@ class RoadMaker : InfrastructureBehaviour
             //Debug.Log("making gizmos");
             Gizmos.color = Color.red;
             foreach (var point in wayPoints)
+            {
+                Gizmos.DrawWireSphere(point, 1f);
+            }
+
+            Gizmos.color = Color.yellow;
+            foreach(var point in stopLights)
             {
                 Gizmos.DrawWireSphere(point, 1f);
             }

@@ -56,7 +56,7 @@ public class StreetLight : MonoBehaviour {
         // If front and back are yellow change FB to red and RL to green
         if (FRMode == 1)
         {
-            Debug.Log("FB Yellow changing to red, RL to green");
+            //Debug.Log("FB Yellow changing to red, RL to green");
             FRMode = 0;
             RLmode = 2;
 
@@ -74,7 +74,7 @@ public class StreetLight : MonoBehaviour {
         }
         else if (RLmode == 2)
         {
-            Debug.Log("RL go from green to yellow");
+            //Debug.Log("RL go from green to yellow");
             RLmode = 1;
             RMid.GetComponent<Renderer>().material = yield;
             RBot.GetComponent<Renderer>().material = off;
@@ -102,7 +102,7 @@ public class StreetLight : MonoBehaviour {
         // If Front and back are green change front and back to yellow
         else if (FRMode == 2)
         {
-            Debug.Log("FB go from green to yellow");
+            //Debug.Log("FB go from green to yellow");
             FRMode = 1;
             FMid.GetComponent<Renderer>().material = yield;
             FBot.GetComponent<Renderer>().material = off;
@@ -114,7 +114,7 @@ public class StreetLight : MonoBehaviour {
         // If front and back are red change FB to green
         else if (FRMode == 0)
         {
-            Debug.Log("FB red to go, RL to red");
+            //Debug.Log("FB red to go, RL to red");
             FRMode = 2;
             RLmode = 0;
             FBot.GetComponent<Renderer>().material = go;
