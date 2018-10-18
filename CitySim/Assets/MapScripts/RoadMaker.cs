@@ -142,7 +142,7 @@ class RoadMaker : InfrastructureBehaviour
             
 
             NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
-            //surface.BuildNavMesh();
+            surface.BuildNavMesh();
 
             yield return null;
 

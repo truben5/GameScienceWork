@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13fffa67725511478eb04b3acc81404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceFile: ManhattanTip
+  resourceFile: Simple
 --- !u!4 &30418748
 Transform:
   m_ObjectHideFlags: 0
@@ -183,8 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 6517b2c0f21b0ec48994608b488df398, type: 2}
-  wayPoints: []
-  stopLights: []
 --- !u!65 &30418751
 BoxCollider:
   m_ObjectHideFlags: 0
