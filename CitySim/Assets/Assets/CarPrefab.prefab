@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 54312446415576414}
   - component: {fileID: 114227147698721792}
   m_Layer: 0
-  m_Name: carPrefab
+  m_Name: CarPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

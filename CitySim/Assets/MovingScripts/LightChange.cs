@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StreetLight : MonoBehaviour {
+public class LightChange : MonoBehaviour {
 
     [Header("Front/Back Lights")]
     public GameObject FTop;
