@@ -11,6 +11,7 @@ public class CarMove : MonoBehaviour {
     public Vector3 destination;
     int totalPoints;
     int currPoint = 0;
+    bool inIntersection = false;
 
 
     // Variables dealing with sensors

@@ -5,18 +5,18 @@ using UnityEngine;
 public class LightTrigger : MonoBehaviour {
 
     public Collider lane;
-    public GameObject trafflight;
+
+    // Current state for collider to interact with cars 
+    public int state;
 
     private void OnTriggerEnter(Collider other)
     {
-
-        string color = trafflight.transform.GetChild(2).GetComponent<Renderer>().material.name;
-        Debug.Log(color);
-        if (color.Equals("Stop"))
-        {
-            Debug.Log("Red Light");
-            other.transform.GetComponentInParent<CarMove>().isBraking = true;
-        }
+        Debug.Log(state);
+        //if (color.Equals("Stop"))
+        //{
+        //    Debug.Log("Red Light");
+        //    other.transform.GetComponentInParent<CarMove>().isBraking = true;
+        //}
         //Debug.Log(this.gameObject.name);
         //Debug.Log(other.name);
         
