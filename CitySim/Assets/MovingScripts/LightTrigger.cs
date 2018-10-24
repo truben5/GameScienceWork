@@ -11,14 +11,19 @@ public class LightTrigger : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(state);
-        //if (color.Equals("Stop"))
-        //{
-        //    Debug.Log("Red Light");
-        //    other.transform.GetComponentInParent<CarMove>().isBraking = true;
-        //}
-        //Debug.Log(this.gameObject.name);
-        //Debug.Log(other.name);
+        //bool inIntersection = other.GetComponent<CarMove>().inIntersection;
+        bool inIntersection = other.GetComponentInParent<CarMove>().inIntersection;
+        // If not in intersection already
+        if (!inIntersection)
+        {
+            inIntersection = true;
+            
+        }
+        // If already in intersection then hitting other collider should have no effect
+        else
+        {
+            inIntersection = false;
+        }
         
     }
     private void OnTriggerExit(Collider other)
