@@ -13,6 +13,8 @@ class RoadMaker : InfrastructureBehaviour
     [System.NonSerialized]
     public List<Vector3> stopLights = new List<Vector3>();
 
+    public GameObject streetLightPrefab;
+
     public bool IsReady { get; private set; }
 
     IEnumerator Start()
@@ -141,13 +143,17 @@ class RoadMaker : InfrastructureBehaviour
 
             
 
-            NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
-            surface.BuildNavMesh();
+            //NavMeshSurface surface = go.AddComponent<NavMeshSurface>();
+            //surface.BuildNavMesh();
 
             yield return null;
 
         }
+        foreach(var light in stopLights)
+        {
 
+            Instantiate(streetLightPrefab, new Vector3(light.x, 13, light.z), Quaternion.identity);
+        }
         IsReady = true;
         Debug.Log("Completed Road Rendering");
     }
@@ -163,11 +169,11 @@ class RoadMaker : InfrastructureBehaviour
                 Gizmos.DrawWireSphere(point, 1f);
             }
 
-            Gizmos.color = Color.yellow;
-            foreach(var point in stopLights)
-            {
-                Gizmos.DrawWireSphere(point, 1f);
-            }
+            //Gizmos.color = Color.yellow;
+            //foreach(var point in stopLights)
+            //{
+            //    Gizmos.DrawWireSphere(point, 1f);
+            //}
         }
 
     }

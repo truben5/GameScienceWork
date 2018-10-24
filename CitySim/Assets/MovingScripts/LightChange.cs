@@ -11,7 +11,8 @@ public class LightChange : MonoBehaviour {
     public GameObject BTop;
     public GameObject BMid;
     public GameObject BBot;
-    private int FRMode = 2;
+    [System.NonSerialized]
+    public int FRMode = 2;
 
     [Header("Right/Left Lights")]
     public GameObject RTop;
@@ -20,7 +21,8 @@ public class LightChange : MonoBehaviour {
     public GameObject LTop;
     public GameObject LMid;
     public GameObject LBot;
-    private int RLmode = 0;
+    [System.NonSerialized]
+    public int RLmode = 0;
 
     [Header("Colors")]
     public Material stop;

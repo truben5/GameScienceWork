@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class LightTrigger : MonoBehaviour {
 
-    public Collider FBlane;
-    public Collider RLlane;
+    public Collider lane;
+    public GameObject trafflight;
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(this.gameObject.name);
-        Debug.Log(other.name);
+
+        string color = trafflight.transform.GetChild(2).GetComponent<Renderer>().material.name;
+        Debug.Log(color);
+        if (color.Equals("Stop"))
+        {
+            Debug.Log("Red Light");
+            other.transform.GetComponentInParent<CarMove>().isBraking = true;
+        }
+        //Debug.Log(this.gameObject.name);
+        //Debug.Log(other.name);
+        
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        Debug.Log("leaving");
     }
 }

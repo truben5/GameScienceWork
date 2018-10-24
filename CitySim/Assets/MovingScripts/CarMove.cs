@@ -111,7 +111,6 @@ public class CarMove : MonoBehaviour {
         //else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint].position) < 3.0f)
         if (Vector3.Distance(navMeshAgent.transform.position, destination) < 3.0f)
         {
-            //Debug.Log("in here");
             currPoint++;
             if (currPoint == totalPoints)
             {

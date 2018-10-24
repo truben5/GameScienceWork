@@ -29,11 +29,11 @@ public class StoreMap : MonoBehaviour {
                 var savePath = "";
                 if (roadName == "OSMway")
                 {
-                    savePath = "Assets/Assets/Maps/Simple/OSMway" + OSMCount + ".asset";
+                    savePath = "Assets/Assets/Maps/Route9/OSMway" + OSMCount + ".asset";
                 }
                 else
                 {
-                    savePath = "Assets/Assets/Maps/Simple/" + roadName + ".asset";
+                    savePath = "Assets/Assets/Maps/Route9/" + roadName + ".asset";
                 }
                 Debug.Log("Saved Mesh to:" + savePath);
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
