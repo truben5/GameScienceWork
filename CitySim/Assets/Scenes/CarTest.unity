@@ -318,6 +318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: {fileID: 144067828}
+  lights: {fileID: 1126897950}
+  stop: {fileID: 2100000, guid: df30922563491084fb780f6ef0e66e87, type: 2}
   state: 0
 --- !u!65 &144067828
 BoxCollider:
@@ -586,6 +588,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1263734826149274, guid: 8bbea8d400be3364e80f546c6fe05a2d,
     type: 2}
   m_PrefabInternal: {fileID: 2057679149}
+--- !u!1 &653998553 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1759216054896148, guid: 8bbea8d400be3364e80f546c6fe05a2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 2057679149}
 --- !u!1 &701125425
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,6 +647,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: {fileID: 701125426}
+  lights: {fileID: 1126897950}
+  stop: {fileID: 2100000, guid: df30922563491084fb780f6ef0e66e87, type: 2}
   state: 0
 --- !u!1 &778569721
 GameObject:
@@ -1090,6 +1099,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8e6452977495f42961e6abe7857f11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1126897950 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1927120642503748, guid: 8bbea8d400be3364e80f546c6fe05a2d,
+    type: 2}
+  m_PrefabInternal: {fileID: 2057679149}
 --- !u!1 &1194451014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1829,6 +1843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: {fileID: 1732095338}
+  lights: {fileID: 653998553}
+  stop: {fileID: 2100000, guid: df30922563491084fb780f6ef0e66e87, type: 2}
   state: 0
 --- !u!1 &1782764810 stripped
 GameObject:
@@ -2136,6 +2152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: {fileID: 1939473884}
+  lights: {fileID: 653998553}
+  stop: {fileID: 2100000, guid: df30922563491084fb780f6ef0e66e87, type: 2}
   state: 0
 --- !u!65 &1939473884
 BoxCollider:
@@ -2163,7 +2181,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4718648382460566, guid: 8bbea8d400be3364e80f546c6fe05a2d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 36.31
+      value: -8.92
       objectReference: {fileID: 0}
     - target: {fileID: 4718648382460566, guid: 8bbea8d400be3364e80f546c6fe05a2d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2171,7 +2189,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4718648382460566, guid: 8bbea8d400be3364e80f546c6fe05a2d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 13.5
+      value: -24.98
       objectReference: {fileID: 0}
     - target: {fileID: 4718648382460566, guid: 8bbea8d400be3364e80f546c6fe05a2d, type: 2}
       propertyPath: m_LocalRotation.x

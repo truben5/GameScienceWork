@@ -12,7 +12,7 @@ public class CarMove : MonoBehaviour {
     int totalPoints;
     int currPoint = 0;
     [NonSerialized]
-    public bool inIntersection = false;
+    public bool inIntersection;
 
 
     // Variables dealing with sensors
@@ -50,6 +50,9 @@ public class CarMove : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        inIntersection = false;
+
         // Remove navmesh movement
         navMeshAgent.updatePosition = false;
         navMeshAgent.updateRotation = false;
@@ -169,6 +172,15 @@ public class CarMove : MonoBehaviour {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
         //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
+        //Debug.Log(currentSpeed);
+        Debug.Log(inIntersection);
+        if (inIntersection)
+        {
+            Debug.Log("In intersection, slow down");
+            wheelFL.motorTorque = maxDecelTorque;
+            wheelFR.motorTorque = maxDecelTorque;
+        }
+
         if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
             //Debug.Log("accelerate");
