@@ -80,6 +80,7 @@ public class CarMove : MonoBehaviour {
         }
 	}
 
+
     // Update is called once per frame
     void Update () {
         //Debug.Log("update");
@@ -173,23 +174,26 @@ public class CarMove : MonoBehaviour {
         //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         //Debug.Log(currentSpeed);
-        Debug.Log(inIntersection);
+        //Debug.Log(inIntersection);
         if (inIntersection)
         {
             Debug.Log("In intersection, slow down");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
+
+            wheelFL.brakeTorque = maxBrakeTorque;
+            wheelFR.brakeTorque = maxBrakeTorque;
         }
 
-        if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
+        else if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
-            //Debug.Log("accelerate");
+            Debug.Log("accelerate");
             wheelFL.motorTorque += maxAccelTorque / 10;
             wheelFR.motorTorque += maxAccelTorque / 10;
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            //Debug.Log("decelerate");
+            Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }

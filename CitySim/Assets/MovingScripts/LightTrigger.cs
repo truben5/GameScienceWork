@@ -31,6 +31,20 @@ public class LightTrigger : MonoBehaviour {
         //}
         
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        bool inIntersection = other.GetComponentInParent<CarMove>().inIntersection;
+        string lightColor = lights.transform.GetChild(0).GetComponent<Renderer>().material.name;
+        Debug.Log("staying in");
+        Debug.Log(inIntersection + " and " + lightColor);
+        if (inIntersection && lightColor.Equals("Go (Instance)"))
+        {
+            Debug.Log("see green");
+            other.GetComponentInParent<CarMove>().inIntersection = false;
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         Debug.Log("leaving");
