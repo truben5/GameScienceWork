@@ -14,10 +14,22 @@ public class StoreMap : MonoBehaviour {
     {
         if (Input.GetKeyDown(saveKey))
         {
-            SaveAsset();
+            MakePrefab();
+            //SaveAsset();
         }
     }
 
+    void MakePrefab()
+    {
+        GameObject[] objectArray = Selection.gameObjects;
+
+        foreach (GameObject gameObject in objectArray)
+        {
+            string localPath = "Assets/Assets/Maps/" + gameObject.name + ".prefab";
+            Object prefab = PrefabUtility.CreatePrefab(localPath, gameObject);
+            PrefabUtility.ReplacePrefab(gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
+        }
+    }
     void SaveAsset()
     {
         foreach(Transform child in transform) {

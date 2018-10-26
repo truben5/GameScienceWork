@@ -152,7 +152,7 @@ class RoadMaker : InfrastructureBehaviour
         foreach(var light in stopLights)
         {
 
-            Instantiate(streetLightPrefab, new Vector3(light.x, 13, light.z), Quaternion.identity);
+            Instantiate(streetLightPrefab, new Vector3(light.x, 10, light.z), Quaternion.identity);
         }
         IsReady = true;
         Debug.Log("Completed Road Rendering");

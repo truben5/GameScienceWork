@@ -13,6 +13,8 @@ public class CarMove : MonoBehaviour {
     int currPoint = 0;
     [NonSerialized]
     public bool inIntersection;
+    [NonSerialized]
+    public int triggerCount = 0;
 
 
     // Variables dealing with sensors
@@ -152,7 +154,9 @@ public class CarMove : MonoBehaviour {
 
     private void Steer()
     {
-        Vector3 relativeVect = transform.InverseTransformPoint(navMeshAgent.nextPosition);
+        Vector3 relativeDest = navMeshAgent.nextPosition;
+        relativeDest.x = relativeDest.x - 1.5f;
+        Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
         if (newSteer > 10f || newSteer < -10f)
         {
@@ -170,12 +174,16 @@ public class CarMove : MonoBehaviour {
 
     private void Drive()
     {
+        // calculate current speed
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
+        // Reset counter if hit 4 triggers
+        triggerCount = triggerCount % 2;
+        Debug.Log(triggerCount);
         //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         //Debug.Log(currentSpeed);
         //Debug.Log(inIntersection);
-        if (inIntersection)
+        if (inIntersection && triggerCount == 1)
         {
             Debug.Log("In intersection, slow down");
             wheelFL.motorTorque = maxDecelTorque;
@@ -187,7 +195,9 @@ public class CarMove : MonoBehaviour {
 
         else if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
-            Debug.Log("accelerate");
+            wheelFL.brakeTorque = 0;
+            wheelFR.brakeTorque = 0;
+            //Debug.Log("accelerate");
             wheelFL.motorTorque += maxAccelTorque / 10;
             wheelFR.motorTorque += maxAccelTorque / 10;
         }
@@ -199,8 +209,8 @@ public class CarMove : MonoBehaviour {
         }
         else if (sharpTurn)
         {
-            wheelFL.motorTorque = maxAccelTorque / 8;
-            wheelFR.motorTorque = maxAccelTorque / 8;
+            wheelFL.motorTorque = maxAccelTorque / 7;
+            wheelFR.motorTorque = maxAccelTorque / 7;
             //wheelFL.motorTorque = maxDecelTorque;
             //wheelFR.motorTorque = maxDecelTorque;
         }
@@ -209,8 +219,6 @@ public class CarMove : MonoBehaviour {
             wheelFL.motorTorque = 0f;
             wheelFR.motorTorque = 0f;
         }
-
-        
     }
 
     // Function to apply braking torque on wheels
