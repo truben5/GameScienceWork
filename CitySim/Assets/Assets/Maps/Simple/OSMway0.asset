@@ -5,7 +5,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: OSMway0
+  m_Name: OSMWay0
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -16,8 +16,8 @@ Mesh:
     firstVertex: 0
     vertexCount: 4
     localAABB:
-      m_Center: {x: 0.25, y: 0, z: -0.25}
-      m_Extent: {x: 25.074953, y: 0, z: 19.504934}
+      m_Center: {x: 0, y: 0, z: 0.25}
+      m_Extent: {x: 22.321098, y: 0, z: 17.507683}
   m_Shapes:
     vertices: []
     shapes: []
@@ -86,7 +86,7 @@ Mesh:
       format: 0
       dimension: 0
     m_DataSize: 96
-    _typelessdata: 7f66a541000000001b0a9ec1000000000000803f000000008199ca4100000000caeb53c1000000000000803f000000008199c6c100000000caeb4b41000000000000803f000000007f66a1c1000000001b0a9a41000000000000803f00000000
+    _typelessdata: 646e8d4100000000bc0f8ac1000000000000803f000000009c91b2410000000088e02bc1000000000000803f000000009c91b2c10000000088e03341000000000000803f00000000646e8dc100000000bc0f8e41000000000000803f00000000
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -140,8 +140,8 @@ Mesh:
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: 0.25, y: 0, z: -0.25}
-    m_Extent: {x: 25.074953, y: 0, z: 19.504934}
+    m_Center: {x: 0, y: 0, z: 0.25}
+    m_Extent: {x: 22.321098, y: 0, z: 17.507683}
   m_MeshUsageFlags: 0
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 

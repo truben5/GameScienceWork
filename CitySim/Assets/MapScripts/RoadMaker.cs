@@ -17,6 +17,8 @@ class RoadMaker : InfrastructureBehaviour
 
     public bool IsReady { get; private set; }
 
+    private int OSMCount = 0;
+
     IEnumerator Start()
     {
         while (!map.IsReady)
@@ -30,7 +32,16 @@ class RoadMaker : InfrastructureBehaviour
 
             GameObject go = new GameObject();
             // Name road if name is available
-            go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" : way.Name;
+            if (string.IsNullOrEmpty(way.Name))
+            {
+                go.name = "OSMWay" + OSMCount;
+                OSMCount++;
+            }
+            else
+            {
+                go.name = way.Name;
+            }
+            //go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" + OSMCount; OSMCount ++ : way.Name;
             // Set map to parent
             go.transform.parent = map.transform;
 

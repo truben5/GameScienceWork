@@ -7,6 +7,7 @@ public class StoreMap : MonoBehaviour {
 
     public KeyCode saveKey = KeyCode.F12;
     public Transform map;
+    public string folderName;
     private int OSMCount = 0;
     //public string saveName = selec;
 
@@ -14,8 +15,9 @@ public class StoreMap : MonoBehaviour {
     {
         if (Input.GetKeyDown(saveKey))
         {
-            MakePrefab();
-            //SaveAsset();
+            SaveAsset();
+            //MakePrefab();
+
         }
     }
 
@@ -27,30 +29,27 @@ public class StoreMap : MonoBehaviour {
         {
             string localPath = "Assets/Assets/Maps/" + gameObject.name + ".prefab";
             Object prefab = PrefabUtility.CreatePrefab(localPath, gameObject);
-            PrefabUtility.ReplacePrefab(gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
+            //PrefabUtility.ReplacePrefab(gameObject, prefab, ReplacePrefabOptions.ConnectToPrefab);
         }
     }
+
     void SaveAsset()
     {
-        foreach(Transform child in transform) {
+        // Create empty prefab
+        var emptyPrefab = PrefabUtility.CreateEmptyPrefab("Assets/Assets/Maps/" + folderName + ".prefab");
+        // Save all procedural meshes
+        foreach (Transform child in transform) {
             Debug.Log("Trying to save");
             var mf = child.GetComponent<MeshFilter>();
             if (mf)
             {
                 string roadName = child.name;
-                var savePath = "";
-                if (roadName == "OSMway")
-                {
-                    savePath = "Assets/Assets/Maps/Route9/OSMway" + OSMCount + ".asset";
-                }
-                else
-                {
-                    savePath = "Assets/Assets/Maps/Route9/" + roadName + ".asset";
-                }
+                var savePath = "Assets/Assets/Maps/" + folderName + "/"+ roadName + ".asset";
                 Debug.Log("Saved Mesh to:" + savePath);
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
                 Debug.Log("successful save");
             }
         }
+        PrefabUtility.ReplacePrefab(gameObject, emptyPrefab);
     }
 }
