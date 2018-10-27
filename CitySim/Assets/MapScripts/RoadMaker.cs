@@ -25,7 +25,10 @@ class RoadMaker : InfrastructureBehaviour
         {
             yield return null;
         }
-
+        // Create game object under map to store streets
+        //GameObject allStreets = new GameObject();
+        //allStreets.transform.parent = map.transform;
+        //allStreets.name = "Roads";
         // TODO: Add Lanes
         foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
         {
@@ -41,7 +44,6 @@ class RoadMaker : InfrastructureBehaviour
             {
                 go.name = way.Name;
             }
-            //go.name = string.IsNullOrEmpty(way.Name) ? "OSMway" + OSMCount; OSMCount ++ : way.Name;
             // Set map to parent
             go.transform.parent = map.transform;
 
@@ -160,10 +162,14 @@ class RoadMaker : InfrastructureBehaviour
             yield return null;
 
         }
+        GameObject streets = new GameObject();
+        streets.name = "StreetLights";
+        streets.transform.parent = map.transform;
         foreach(var light in stopLights)
         {
 
-            Instantiate(streetLightPrefab, new Vector3(light.x, 10, light.z), Quaternion.identity);
+            GameObject streetLight = Instantiate(streetLightPrefab, new Vector3(light.x, 10, light.z), Quaternion.identity);
+            streetLight.transform.parent = streets.transform;
         }
         IsReady = true;
         Debug.Log("Completed Road Rendering");
