@@ -9,6 +9,7 @@ public class StoreMap : MonoBehaviour {
     public Transform map;
     public string folderName;
     private int OSMCount = 0;
+    private Dictionary<string, int> dict = new Dictionary<string, int>();
     //public string saveName = selec;
 
     void Update()
@@ -44,7 +45,23 @@ public class StoreMap : MonoBehaviour {
             if (mf)
             {
                 string roadName = child.name;
-                var savePath = "Assets/Assets/Maps/" + folderName + "/"+ roadName + ".asset";
+                int tmp = 0;
+                // Storing frequency of road names to create unique mesh names
+                if (dict.ContainsKey(roadName))
+                {
+                    dict[roadName] +=1;
+                    tmp = dict[roadName];
+                }
+                else
+                {
+                    dict.Add(roadName, 0);
+                }
+                string addOn = "";
+                if (tmp != 0)
+                {
+                    addOn = tmp.ToString();
+                }
+                var savePath = "Assets/Assets/Maps/" + folderName + "/"+ roadName + addOn + ".asset";
                 Debug.Log("Saved Mesh to:" + savePath);
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
                 Debug.Log("successful save");

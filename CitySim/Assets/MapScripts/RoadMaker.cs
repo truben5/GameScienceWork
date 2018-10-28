@@ -75,17 +75,7 @@ class RoadMaker : InfrastructureBehaviour
 
                 //int avg = 1;
                 Vector3 diff = Vector3.zero;
-
-                //if (i > 0 && i < way.NodeIDs.Count - 1)
-                //{
-                //    avg = 2;
-                //    s3 = map.nodes[way.NodeIDs[i + 1]];
-                //    diff = ((s2 - s1) + (s3 - s2)).normalized / avg;
-                //}
-                //else
-                //{
-                    diff = (s2 - s1).normalized;
-                //}
+                diff = (s2 - s1).normalized;
 
                 //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
                 var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
