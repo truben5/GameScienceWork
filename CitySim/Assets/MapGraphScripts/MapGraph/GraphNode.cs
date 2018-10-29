@@ -5,20 +5,20 @@ using UnityEngine;
 public class GraphNode
 {
     public Vector3 position { get; private set; }
-    public List<GraphEdge> neighbors { get; private set; }
+    public List<GraphNode> neighbors { get; private set; }
 
     public GraphNode(Vector3 v)
     {
         position = v;
-        neighbors = new List<GraphEdge>();
+        neighbors = new List<GraphNode>();
     }
 
     // Checks if node is already a neigbor
     public bool ContainsNeighbor(GraphNode checkNode)
     {
-        foreach (GraphEdge edge in neighbors)
+        foreach (GraphNode neighbor in neighbors)
         {
-            if (edge.end == checkNode)
+            if (neighbor == checkNode)
             {
                 return true;
             }
@@ -31,8 +31,7 @@ public class GraphNode
     {
         if (!ContainsNeighbor(newNode))
         {
-            GraphEdge newEdge = new GraphEdge(this, newNode);
-            neighbors.Add(newEdge);
+            neighbors.Add(newNode);
         }
     }
 }

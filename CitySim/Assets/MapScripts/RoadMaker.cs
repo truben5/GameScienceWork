@@ -9,7 +9,8 @@ class RoadMaker : InfrastructureBehaviour
     public Material roadMaterial;
 
     [System.NonSerialized]
-    public  List<Vector3> wayPoints = new List<Vector3>();
+    public MapGraph graph = new MapGraph();
+    //public  List<Vector3> wayPoints = new List<Vector3>();
     [System.NonSerialized]
     public List<Vector3> stopLights = new List<Vector3>();
 
@@ -52,10 +53,6 @@ class RoadMaker : InfrastructureBehaviour
 
             MeshFilter mf = go.AddComponent<MeshFilter>();
             MeshRenderer mr = go.AddComponent<MeshRenderer>();
-            //BoxCollider bx = go.AddComponent<BoxCollider>();
-            //MeshCollider mc = go.AddComponent<MeshCollider>();
-            //mc.convex = true;
-            //mc.sharedMesh = mf.mesh;
 
             mr.material = roadMaterial;
 
@@ -86,7 +83,7 @@ class RoadMaker : InfrastructureBehaviour
                 Vector3 v4 = s2 - cross;
 
                 // Add node location to waypoint
-                wayPoints.Add(p1 - map.bounds.Center);
+                //wayPoints.Add(p1 - map.bounds.Center);
 
                 // Add node locations to stoplights
                 if (p1.IsStreetLight)
@@ -165,23 +162,23 @@ class RoadMaker : InfrastructureBehaviour
         Debug.Log("Completed Road Rendering");
     }
 
-    void OnDrawGizmos()
-    {
-        if (IsReady == true)
-        {
-            //Debug.Log("making gizmos");
-            Gizmos.color = Color.red;
-            foreach (var point in wayPoints)
-            {
-                Gizmos.DrawWireSphere(point, 1f);
-            }
+    //void OnDrawGizmos()
+    //{
+    //    if (IsReady == true)
+    //    {
+    //        //Debug.Log("making gizmos");
+    //        Gizmos.color = Color.red;
+    //        foreach (var point in wayPoints)
+    //        {
+    //            Gizmos.DrawWireSphere(point, 1f);
+    //        }
 
-            //Gizmos.color = Color.yellow;
-            //foreach(var point in stopLights)
-            //{
-            //    Gizmos.DrawWireSphere(point, 1f);
-            //}
-        }
+    //        //Gizmos.color = Color.yellow;
+    //        //foreach(var point in stopLights)
+    //        //{
+    //        //    Gizmos.DrawWireSphere(point, 1f);
+    //        //}
+    //    }
 
-    }
+    //}
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -116,7 +116,8 @@ NavMeshSettings:
 --- !u!1 &30418746
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 1960138814825754, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
@@ -137,7 +138,8 @@ GameObject:
 --- !u!114 &30418747
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114348215942161724, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Enabled: 1
@@ -145,11 +147,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13fffa67725511478eb04b3acc81404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceFile: ManhattanTip
+  resourceFile: Simple
 --- !u!4 &30418748
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 4097405986841304, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -162,7 +165,8 @@ Transform:
 --- !u!114 &30418749
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114875340278221162, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Enabled: 0
@@ -176,7 +180,8 @@ MonoBehaviour:
 --- !u!114 &30418750
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114098259269991592, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Enabled: 1
@@ -190,7 +195,8 @@ MonoBehaviour:
 --- !u!65 &30418751
 BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 65332448526726728, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Material: {fileID: 0}
@@ -202,7 +208,8 @@ BoxCollider:
 --- !u!114 &30418752
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_PrefabParentObject: {fileID: 114968181496897140, guid: b46038b4cd1c370469501f2b78d103c7,
+    type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Enabled: 1
@@ -212,7 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveKey: 293
   map: {fileID: 30418748}
-  folderName: ManhattanTip
+  folderName: Simple
 --- !u!114 &30418753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +228,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 30418746}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c90b997d5d8974c9d29386ea86bcf7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f721a20a0445cf459728d8be4744984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &170076733
