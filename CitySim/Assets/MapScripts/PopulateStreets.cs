@@ -12,22 +12,22 @@ class PopulateStreets : MonoBehaviour {
     Random random = new Random();
 
     // Use this for initialization
-    IEnumerator Start () {
-        while (!roadMaker.IsReady)
-        {
-            yield return null;
-        }
+ //   IEnumerator Start () {
+ //       while (!roadMaker.IsReady)
+ //       {
+ //           yield return null;
+ //       }
 
-        Debug.Log("Population starting");
-        for (int i=0; i < carPopulation; i++)
-        {
-            Vector3 pos = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
-            pos.y += 3;
-            GameObject Car = Instantiate(carPrefab, pos, Quaternion.identity);
-            Car.GetComponent<CarMove>().destination = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
+ //       Debug.Log("Population starting");
+ //       for (int i=0; i < carPopulation; i++)
+ //       {
+ //           Vector3 pos = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
+ //           pos.y += 3;
+ //           GameObject Car = Instantiate(carPrefab, pos, Quaternion.identity);
+ //           Car.GetComponent<CarMove>().destination = roadMaker.wayPoints[random.Next(roadMaker.wayPoints.Count - 1)];
 
-        }
-	}
+ //       }
+	//}
 	
 
 }

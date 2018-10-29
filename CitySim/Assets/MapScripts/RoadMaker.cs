@@ -9,10 +9,10 @@ class RoadMaker : InfrastructureBehaviour
     public Material roadMaterial;
 
     [System.NonSerialized]
-    public MapGraph graph = new MapGraph();
+    public MapGraph graph;
     //public  List<Vector3> wayPoints = new List<Vector3>();
     [System.NonSerialized]
-    public List<Vector3> stopLights = new List<Vector3>();
+    public List<Vector3> stopLights;
 
     public GameObject streetLightPrefab;
 
@@ -22,6 +22,9 @@ class RoadMaker : InfrastructureBehaviour
 
     IEnumerator Start()
     {
+        graph = new MapGraph();
+        stopLights = new List<Vector3>();
+
         while (!map.IsReady)
         {
             yield return null;
@@ -68,7 +71,7 @@ class RoadMaker : InfrastructureBehaviour
 
                 Vector3 s1 = p1 - localOrigin;
                 Vector3 s2 = p2 - localOrigin;
-                Vector3 s3 = Vector3.zero;
+                //Vector3 s3 = Vector3.zero;
 
                 //int avg = 1;
                 Vector3 diff = Vector3.zero;
@@ -82,14 +85,21 @@ class RoadMaker : InfrastructureBehaviour
                 Vector3 v3 = s2 + cross;
                 Vector3 v4 = s2 - cross;
 
-                // Add node location to waypoint
-                //wayPoints.Add(p1 - map.bounds.Center);
+                // calculates current and next position vector
+                Vector3 currPos = p1 - map.bounds.Center;
+                Vector3 nextPos = p2 - map.bounds.Center;
+                // Adds current position to graph
+                //graph.AddNode(currPos);
+                //GraphNode currNode = graph.nodes[currPos];
+
+                UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+
 
                 // Add node locations to stoplights
                 if (p1.IsStreetLight)
                 {
                     //Debug.Log("light");
-                    stopLights.Add(p1 - map.bounds.Center);
+                    stopLights.Add(currPos);
                 }
 
 
@@ -162,23 +172,57 @@ class RoadMaker : InfrastructureBehaviour
         Debug.Log("Completed Road Rendering");
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    if (IsReady == true)
-    //    {
-    //        //Debug.Log("making gizmos");
-    //        Gizmos.color = Color.red;
-    //        foreach (var point in wayPoints)
-    //        {
-    //            Gizmos.DrawWireSphere(point, 1f);
-    //        }
+    private void UpdateGraph(Vector3 currPos, Vector3 nextPos, int currI, int maxI, int direction)
+    {
+        GraphNode currNode;
+        GraphNode nextNode;
+        // Add next node to current node neighbors and current to next node neighbors
+        if (direction == 2) {
+            // Add current and next node to graph. Connect from curr -> next and cur <- next
+            if(currI == 1)
+            {
+                graph.AddNode(currPos);
+                graph.AddNode(nextPos);
 
-    //        //Gizmos.color = Color.yellow;
-    //        //foreach(var point in stopLights)
-    //        //{
-    //        //    Gizmos.DrawWireSphere(point, 1f);
-    //        //}
-    //    }
+                currNode = graph.nodes[currPos];
+                nextNode = graph.nodes[nextPos];
 
-    //}
+                graph.nodes[currPos].AddNeighbor(nextNode);
+                graph.nodes[nextPos].AddNeighbor(currNode);
+            }
+            else if (currI > 1 && currI < maxI)
+            {
+                graph.AddNode(nextPos);
+                currNode = graph.nodes[currPos];
+                nextNode = graph.nodes[nextPos];
+
+                graph.nodes[currPos].AddNeighbor(nextNode);
+                graph.nodes[nextPos].AddNeighbor(currNode);
+            }
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        if (IsReady == true)
+        {
+            //Debug.Log("making gizmos");
+            Gizmos.color = Color.red;
+            foreach (var point in graph.nodes)
+            {
+                Gizmos.DrawWireSphere(point.Key, 1f);
+                foreach (var neighbor in graph.nodes[point.Key].neighbors)
+                {
+                    Gizmos.DrawLine(point.Key, neighbor.position);
+                }
+            }
+
+            //Gizmos.color = Color.yellow;
+            //foreach(var point in stopLights)
+            //{
+            //    Gizmos.DrawWireSphere(point, 1f);
+            //}
+        }
+
+    }
 }
