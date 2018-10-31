@@ -34,4 +34,10 @@ public class GraphNode
             neighbors.Add(newNode);
         }
     }
+
+    public float GetDistance(GraphNode endNode)
+    {
+        float dist = Vector3.Distance(position, endNode.position);
+        return dist;
+    }
 }
