@@ -25,47 +25,71 @@ public class MapGraph {
         Dictionary<GraphNode, float> distanceToEnd = new Dictionary<GraphNode, float>();
         Dictionary<GraphNode, float> startDist = new Dictionary<GraphNode, float>();
         Dictionary<GraphNode, bool> visited = new Dictionary<GraphNode, bool>();
+        Dictionary<GraphNode, GraphNode> closest = new Dictionary<GraphNode, GraphNode>();
         foreach (var node in nodes)
         {
             distanceToEnd[node.Value] = node.Value.GetDistance(end);
             visited[node.Value] = false;
         }
-        AStarSearch(start, end, distanceToEnd, visited, startDist);
+        AStarSearch(start, end, distanceToEnd, visited, closest);
+
         var shortestPath = new List<GraphNode>();
         return shortestPath;
     }
 
-    public void AStarSearch(GraphNode start, GraphNode end, Dictionary<GraphNode, float> endDist, Dictionary<GraphNode, 
-        bool> visited, Dictionary<GraphNode, float>startDist)
+    public Dictionary<GraphNode, GraphNode> AStarSearch(GraphNode start, GraphNode end, Dictionary<GraphNode, 
+        float> endDist, Dictionary<GraphNode, bool> visited, Dictionary<GraphNode, GraphNode> closest)
     {
+        Dictionary<GraphNode, float> startDist = new Dictionary<GraphNode, float>();
         startDist[start] = 0;
         List<GraphNode> queue = new List<GraphNode>();
         queue.Add(start);
         while (queue.Count > 0)
         {
             // Sort queue by starting distance
-            queue = queue.OrderBy( x => startDist[x]).ToList();
+            queue = queue.OrderBy( x => startDist[x] + endDist[x]).ToList();
             GraphNode node = queue.First();
             queue.Remove(node);
+            if (node == end)
+            {
+                return closest;
+            }
+            // g is the cost to get to the current node nad heuristic is euclidian distance between node youre looking at and goal
+            // f = g + h
             // Loop through sorted list of neighbors by ending distance
-            foreach(GraphNode neighbor in node.neighbors.OrderBy(x => endDist[x]))
+            foreach (GraphNode neighbor in node.neighbors.OrderBy(x => endDist[x]))
             {
                 if (visited[neighbor] == true)
                 {
                     continue;
                 }
-                if (!startDist.ContainsKey(neighbor))
+                float connectionDist = Vector3.Distance(neighbor.position, node.position);
+                if (!startDist.ContainsKey(neighbor) || startDist[node] + connectionDist < startDist[neighbor])
                 {
+                    startDist[neighbor] = startDist[node] + connectionDist;
+                    closest[neighbor] = node;
 
+                    if (!queue.Contains(neighbor))
+                    {
+                        queue.Add(neighbor);
+                    }
                 }
 
             }
             visited[node] = true;
-            if (node == end)
-            {
-                return;
-            }
         }
+        return closest;
+    }
+
+    public List<GraphNode> BuildPath(List<GraphNode> path, GraphNode currNode, Dictionary<GraphNode,GraphNode> closest)
+    {
+        if (closest[currNode] == null)
+        {
+            return path;
+        }
+        path.Add(closest[currNode]);
+        path = BuildPath(path, closest[currNode], closest);
+        return path;
     }
 
 }

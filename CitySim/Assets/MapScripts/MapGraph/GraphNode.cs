@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GraphNode
+public class GraphNode : IComparable<GraphNode>
 {
     public Vector3 position { get; private set; }
     public List<GraphNode> neighbors { get; private set; }
@@ -39,5 +40,19 @@ public class GraphNode
     {
         float dist = Vector3.Distance(position, endNode.position);
         return dist;
+    }
+
+    public int CompareTo(GraphNode newNode)
+    {
+
+        if (position == newNode.position)
+        {
+            return 0;
+        }
+        if ((position.x < newNode.position.x) || ((position.x == newNode.position.x) && (position.y < newNode.position.y)))
+        {
+            return -1;
+        }
+        return 1;
     }
 }
