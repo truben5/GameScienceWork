@@ -178,7 +178,7 @@ public class CarMove : MonoBehaviour {
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
         // Reset counter if hit 4 triggers
         triggerCount = triggerCount % 2;
-        Debug.Log(triggerCount);
+        //Debug.Log(triggerCount);
         //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         //Debug.Log(currentSpeed);

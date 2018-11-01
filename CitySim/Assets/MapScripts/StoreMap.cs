@@ -66,6 +66,7 @@ public class StoreMap : MonoBehaviour {
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
                 Debug.Log("successful save");
             }
+
         }
         PrefabUtility.ReplacePrefab(gameObject, emptyPrefab);
     }

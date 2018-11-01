@@ -659,7 +659,7 @@ MonoBehaviour:
   frontSideSensorPos: 0.9
   frontSensorAngle: 40
   maxSteerAngle: 40
-  maxSpeed: 250
+  maxSpeed: 150
   maxAccelTorque: 100
   maxDecelTorque: -150
   maxBrakeTorque: 3500

@@ -5829,7 +5829,6 @@ GameObject:
   - component: {fileID: 114526597483839836}
   - component: {fileID: 65224688989007502}
   - component: {fileID: 114200905801594980}
-  - component: {fileID: 114586356274024142}
   m_Layer: 0
   m_Name: Route9
   m_TagString: Untagged
@@ -35996,6 +35995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 6517b2c0f21b0ec48994608b488df398, type: 2}
+  wayPoints: []
   streetLightPrefab: {fileID: 1257997532625792, guid: 8bbea8d400be3364e80f546c6fe05a2d,
     type: 2}
 --- !u!114 &114103612303620090
@@ -39306,7 +39306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carPopulation: 20
-  roadMaker: {fileID: 114095354593647282}
+  loader: {fileID: 0}
   carPrefab: {fileID: 1046722405630948, guid: e58264f5b20749d449b0d63fd5391e7f, type: 2}
 --- !u!114 &114528148991676496
 MonoBehaviour:
@@ -39652,17 +39652,6 @@ MonoBehaviour:
   LCollider: {fileID: 1889438729373474}
   FCollider: {fileID: 1310313413633560}
   BCollider: {fileID: 1147383626869358}
---- !u!114 &114586356274024142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1624176489302408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c90b997d5d8974c9d29386ea86bcf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114588801577525638
 MonoBehaviour:
   m_ObjectHideFlags: 1

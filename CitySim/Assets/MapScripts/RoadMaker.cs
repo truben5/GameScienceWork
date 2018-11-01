@@ -10,7 +10,7 @@ class RoadMaker : InfrastructureBehaviour
 
     [System.NonSerialized]
     public MapGraph graph;
-    //public  List<Vector3> wayPoints = new List<Vector3>();
+    public  List<Vector3> wayPoints = new List<Vector3>();
     [System.NonSerialized]
     public List<Vector3> stopLights;
 
@@ -91,6 +91,7 @@ class RoadMaker : InfrastructureBehaviour
                 // Adds current position to graph
                 //graph.AddNode(currPos);
                 //GraphNode currNode = graph.nodes[currPos];
+                wayPoints.Add(p1);
 
                 UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
 
