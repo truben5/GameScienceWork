@@ -9,8 +9,12 @@ class PopulateStreets : MonoBehaviour {
     public int carPopulation = 100;
     public GraphLoader loader;
     public GameObject carPrefab;
+
+    public GameObject v1;
+    public GameObject v2;
+
     Random random = new Random();
-    List<GraphNode> path = new List<GraphNode>();
+    List<GraphNode> path;
     bool x = false;
 
     // Use this for initialization
@@ -23,11 +27,13 @@ class PopulateStreets : MonoBehaviour {
             yield return null;
         }
 
-        GraphNode start = new GraphNode(loader.wayPoints[random.Next(loader.wayPoints.Count - 1)]);
-        GraphNode end = new GraphNode(loader.wayPoints[random.Next(loader.wayPoints.Count - 1)]);
-
-        List<GraphNode> path = loader.graph.ShortestPath(start, end);
-        Debug.Log(path.Count);
+        Vector3 start = loader.wayPoints[random.Next(loader.wayPoints.Count - 1)];
+        Vector3 end = loader.wayPoints[random.Next(loader.wayPoints.Count - 1)];
+        //Debug.Log("start: " + start + " end: " + end);
+        v1.transform.position = start;
+        v2.transform.position = end;
+        path = loader.graph.ShortestPath(loader.graph.nodes[start], loader.graph.nodes[end]);
+        //Debug.Log(path.Count);
         x = true;
         //Debug.Log("Population starting");
         //Debug.Log(loader.graph.nodes.Count);
@@ -50,7 +56,7 @@ class PopulateStreets : MonoBehaviour {
             Gizmos.color = Color.yellow;
             foreach (var point in path)
             {
-                Debug.Log(point.position);
+                //Debug.Log("drawing " + point.position);
                 Gizmos.DrawWireSphere(point.position, 1f);
                 //foreach (var neighbor in graph.nodes[point.Key].neighbors)
                 //{

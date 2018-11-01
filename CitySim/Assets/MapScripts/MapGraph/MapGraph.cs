@@ -31,9 +31,9 @@ public class MapGraph {
             distanceToEnd[node.Value] = node.Value.GetDistance(end);
             visited[node.Value] = false;
         }
-        AStarSearch(start, end, distanceToEnd, visited, closest);
-
-        var shortestPath = new List<GraphNode>();
+        closest = AStarSearch(start, end, distanceToEnd, visited, closest);
+        
+        List<GraphNode> shortestPath = BuildPath(end,closest);
         return shortestPath;
     }
 
@@ -46,9 +46,11 @@ public class MapGraph {
         queue.Add(start);
         while (queue.Count > 0)
         {
+            //Debug.Log("queueueueue");
             // Sort queue by starting distance
             queue = queue.OrderBy( x => startDist[x] + endDist[x]).ToList();
             GraphNode node = queue.First();
+            //Debug.Log(node.position);
             queue.Remove(node);
             if (node == end)
             {
@@ -59,6 +61,7 @@ public class MapGraph {
             // Loop through sorted list of neighbors by ending distance
             foreach (GraphNode neighbor in node.neighbors.OrderBy(x => endDist[x]))
             {
+                //Debug.Log("neighbor is: " + neighbor.position);
                 if (visited[neighbor] == true)
                 {
                     continue;
@@ -81,14 +84,21 @@ public class MapGraph {
         return closest;
     }
 
-    public List<GraphNode> BuildPath(List<GraphNode> path, GraphNode currNode, Dictionary<GraphNode,GraphNode> closest)
+    public List<GraphNode> BuildPath(GraphNode currNode, Dictionary<GraphNode,GraphNode> closest)
     {
-        if (closest[currNode] == null)
+        List<GraphNode> path = new List<GraphNode>();
+        path.Add(currNode);
+        while (closest.ContainsKey(currNode))
         {
-            return path;
+            path.Add(closest[currNode]);
+            currNode = closest[currNode];
         }
-        path.Add(closest[currNode]);
-        path = BuildPath(path, closest[currNode], closest);
+        //if (closest[currNode] == null)
+        //{
+        //    return path;
+        //}
+        //path.Add(closest[currNode]);
+        //path = BuildPath(path, closest[currNode], closest);
         return path;
     }
 
