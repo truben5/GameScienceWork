@@ -7,8 +7,8 @@ using UnityEngine.AI;
 public class CarMove : MonoBehaviour {
 
     // Variables dealing with waypoints
-    //List<Transform> wayPoints = new List<Transform>();
-    public Vector3 destination;
+    public List<Vector3> wayPoints = new List<Vector3>();
+    //public Vector3 destination;
     int totalPoints;
     int currPoint = 0;
     [NonSerialized]
@@ -76,8 +76,13 @@ public class CarMove : MonoBehaviour {
         }
         else
         {
-            navMeshAgent.SetDestination(destination);
-            //navMeshAgent.SetDestination(wayPoints[0].position);
+            
+            //navMeshAgent.SetDestination(destination);
+
+            // Start navmesh agent moving towards first point
+            navMeshAgent.SetDestination(wayPoints[0]);
+            totalPoints = wayPoints.Count;
+            //Debug.Log(wayPoints.Count);
             //Debug.Log(navMeshAgent.GetComponent<NavMeshAgent>().pathEndPosition);
         }
 	}
@@ -110,23 +115,26 @@ public class CarMove : MonoBehaviour {
     // Function to check if reached waypoint and keep track of current waypoint we are moving towards
     private void CheckWayPointDistance()
     {
-        //Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint].position));
-        //if (currPoint >= totalPoints)
-        //{
-        //    navMeshAgent.isStopped = true;
-        //}
+        Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint]));
+        if (currPoint >= totalPoints)
+        {
+            Debug.Log("currPoint: " + currPoint + "  total: " + totalPoints);
+            navMeshAgent.isStopped = true;
+        }
 
-        //else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint].position) < 3.0f)
-        if (Vector3.Distance(navMeshAgent.transform.position, destination) < 3.0f)
+        // If very close to waypoint then set destination to next waypoint. Stop if reached destination
+        else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint]) < 4.0f)
+        //if (Vector3.Distance(navMeshAgent.transform.position, destination) < 3.0f)
         {
             currPoint++;
             if (currPoint == totalPoints)
             {
+                Debug.Log("reached dest");
                 reachedDest = true;
                 return;
             }
-            //Debug.Log("moving to next waypoint" + wayPoints[currPoint].position);
-            //navMeshAgent.SetDestination(wayPoints[currPoint].position);
+            Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
+            navMeshAgent.SetDestination(wayPoints[currPoint]);
         }
     }
 
@@ -136,9 +144,9 @@ public class CarMove : MonoBehaviour {
         if (carDist > maxDistFromCar)
         {
             //Debug.Log("Too far");
-            navMeshAgent.velocity = navMeshAgent.velocity / 2f;
+            navMeshAgent.velocity = navMeshAgent.velocity / 1.5f;
             //navMeshAgent.velocity = GetComponent<Rigidbody>().velocity;
-            navMeshAgent.speed = maxNavSpeed / 2f;
+            navMeshAgent.speed = maxNavSpeed / 1.5f;
         }
         else if (carDist < minDistFromCar)
         {
@@ -148,14 +156,15 @@ public class CarMove : MonoBehaviour {
             //navMeshAgent.velocity = na;
             //navMeshAgent.speed = maxNavSpeed * 1.5f;
             //maxSpeed += 1;
-            navMeshAgent.speed = maxNavSpeed * 1.5f;
+            navMeshAgent.speed = maxNavSpeed * 1.6f;
         }
     }
 
     private void Steer()
     {
         Vector3 relativeDest = navMeshAgent.nextPosition;
-        relativeDest.x = relativeDest.x - 1.5f;
+        // Offset for right side of road? Unsure if needed
+        //relativeDest.x = relativeDest.x + 1.5f;
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
         if (newSteer > 10f || newSteer < -10f)

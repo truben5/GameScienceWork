@@ -20,7 +20,7 @@ public class MapGraph {
         }
     }
 
-    public List<GraphNode> ShortestPath(GraphNode start, GraphNode end)
+    public List<Vector3> ShortestPath(GraphNode start, GraphNode end)
     {
         Dictionary<GraphNode, float> distanceToEnd = new Dictionary<GraphNode, float>();
         Dictionary<GraphNode, float> startDist = new Dictionary<GraphNode, float>();
@@ -33,7 +33,7 @@ public class MapGraph {
         }
         closest = AStarSearch(start, end, distanceToEnd, visited, closest);
         
-        List<GraphNode> shortestPath = BuildPath(end,closest);
+        List<Vector3> shortestPath = BuildPath(end,closest);
         return shortestPath;
     }
 
@@ -84,21 +84,16 @@ public class MapGraph {
         return closest;
     }
 
-    public List<GraphNode> BuildPath(GraphNode currNode, Dictionary<GraphNode,GraphNode> closest)
+    public List<Vector3> BuildPath(GraphNode currNode, Dictionary<GraphNode,GraphNode> closest)
     {
-        List<GraphNode> path = new List<GraphNode>();
-        path.Add(currNode);
+        List<Vector3> path = new List<Vector3>();
+        path.Add(currNode.position);
         while (closest.ContainsKey(currNode))
         {
-            path.Add(closest[currNode]);
+            path.Add(closest[currNode].position);
             currNode = closest[currNode];
         }
-        //if (closest[currNode] == null)
-        //{
-        //    return path;
-        //}
-        //path.Add(closest[currNode]);
-        //path = BuildPath(path, closest[currNode], closest);
+        path.Reverse();
         return path;
     }
 

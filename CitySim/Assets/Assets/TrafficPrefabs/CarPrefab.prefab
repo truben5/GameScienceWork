@@ -653,16 +653,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93268b2e6dc2218478b877573839a9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {x: 0, y: 0, z: 0}
+  wayPoints: []
   sensorLength: 25
   frontSensorPos: -1.66
   frontSideSensorPos: 0.9
   frontSensorAngle: 40
   maxSteerAngle: 40
-  maxSpeed: 150
-  maxAccelTorque: 100
-  maxDecelTorque: -150
-  maxBrakeTorque: 3500
+  maxSpeed: 360
+  maxAccelTorque: 145
+  maxDecelTorque: -220
+  maxBrakeTorque: 4000
   isBraking: 0
   wheelFL: {fileID: 146058623672901850}
   wheelFR: {fileID: 146985977446145132}
@@ -670,7 +670,7 @@ MonoBehaviour:
   wheelRR: {fileID: 146786094399005548}
   centerOfMass: {x: 0, y: 0, z: 0}
   navMeshAgent: {fileID: 195452930338960070}
-  maxNavSpeed: 4
+  maxNavSpeed: 12
   maxDistFromCar: 10
   minDistFromCar: 2
 --- !u!146 &146058623672901850
