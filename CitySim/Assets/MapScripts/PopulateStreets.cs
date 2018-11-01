@@ -53,20 +53,20 @@ class PopulateStreets : MonoBehaviour {
         }
     }
 
-    void OnDrawGizmos()
-    {
+    //void OnDrawGizmos()
+    //{
 
-        //Debug.Log("making gizmos");
-        Gizmos.color = Color.yellow;
-        foreach (var point in path)
-        {
-            //Debug.Log("drawing " + point.position);
-            Gizmos.DrawWireSphere(point, 1f);
-            //foreach (var neighbor in graph.nodes[point.Key].neighbors)
-           //{
-            //    Gizmos.DrawLine(point.Key, neighbor.position);
-            //}
-        }
+    //    //Debug.Log("making gizmos");
+    //    Gizmos.color = Color.yellow;
+    //    foreach (var point in path)
+    //    {
+    //        //Debug.Log("drawing " + point.position);
+    //        Gizmos.DrawWireSphere(point, 1f);
+    //        //foreach (var neighbor in graph.nodes[point.Key].neighbors)
+    //       //{
+    //        //    Gizmos.DrawLine(point.Key, neighbor.position);
+    //        //}
+    //    }
 
-    }       
+    //}       
 }

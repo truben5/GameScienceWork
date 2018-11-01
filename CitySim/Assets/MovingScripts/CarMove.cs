@@ -115,7 +115,7 @@ public class CarMove : MonoBehaviour {
     // Function to check if reached waypoint and keep track of current waypoint we are moving towards
     private void CheckWayPointDistance()
     {
-        Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint]));
+        //Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint]));
         if (currPoint >= totalPoints)
         {
             Debug.Log("currPoint: " + currPoint + "  total: " + totalPoints);
@@ -167,7 +167,7 @@ public class CarMove : MonoBehaviour {
         //relativeDest.x = relativeDest.x + 1.5f;
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
-        if (newSteer > 10f || newSteer < -10f)
+        if (newSteer > 12f || newSteer < -12f)
         {
             sharpTurn = true;
         }
@@ -218,6 +218,7 @@ public class CarMove : MonoBehaviour {
         }
         else if (sharpTurn)
         {
+            Debug.Log("turning");
             wheelFL.motorTorque = maxAccelTorque / 7;
             wheelFR.motorTorque = maxAccelTorque / 7;
             //wheelFL.motorTorque = maxDecelTorque;
@@ -225,8 +226,13 @@ public class CarMove : MonoBehaviour {
         }
         else
         {
-            wheelFL.motorTorque = 0f;
-            wheelFR.motorTorque = 0f;
+            //Debug.Log("none");
+            if (wheelFL.motorTorque > 0)
+            {
+                wheelFL.motorTorque = 0f;
+                wheelFR.motorTorque = 0f;
+            }
+            
         }
     }
 
@@ -235,7 +241,7 @@ public class CarMove : MonoBehaviour {
     {
         if (isBraking)
         {
-            //Debug.Log("Braking");
+            Debug.Log("Braking");
             wheelRL.brakeTorque = maxBrakeTorque;
             wheelRR.brakeTorque = maxBrakeTorque;
         }

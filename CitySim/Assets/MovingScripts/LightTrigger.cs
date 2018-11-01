@@ -13,6 +13,7 @@ public class LightTrigger : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("hit trigger");
         bool inIntersection = other.GetComponentInParent<CarMove>().inIntersection;
         // Determine light state
         CheckLightState();
