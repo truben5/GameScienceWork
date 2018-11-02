@@ -110,10 +110,10 @@ class GraphLoader : InfrastructureBehaviour
             foreach (var point in graph.nodes)
             {
                 Gizmos.DrawWireSphere(point.Key, 1f);
-                foreach (var neighbor in graph.nodes[point.Key].neighbors)
-                {
-                    Gizmos.DrawLine(point.Key, neighbor.position);
-                }
+                //foreach (var neighbor in graph.nodes[point.Key].neighbors)
+                //{
+                 //   Gizmos.DrawLine(point.Key, neighbor.position);
+                //}
             }
 
         }

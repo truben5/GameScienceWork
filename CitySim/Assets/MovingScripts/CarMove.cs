@@ -118,7 +118,7 @@ public class CarMove : MonoBehaviour {
         //Debug.Log(Vector3.Distance(navMeshAgent.GetComponent<NavMeshAgent>().transform.position, wayPoints[currPoint]));
         if (currPoint >= totalPoints)
         {
-            Debug.Log("currPoint: " + currPoint + "  total: " + totalPoints);
+            //Debug.Log("currPoint: " + currPoint + "  total: " + totalPoints);
             navMeshAgent.isStopped = true;
         }
 
@@ -129,11 +129,11 @@ public class CarMove : MonoBehaviour {
             currPoint++;
             if (currPoint == totalPoints)
             {
-                Debug.Log("reached dest");
+                //Debug.Log("reached dest");
                 reachedDest = true;
                 return;
             }
-            Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
+            //Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
             navMeshAgent.SetDestination(wayPoints[currPoint]);
         }
     }
@@ -194,7 +194,7 @@ public class CarMove : MonoBehaviour {
         //Debug.Log(inIntersection);
         if (inIntersection && triggerCount == 1)
         {
-            Debug.Log("In intersection, slow down");
+            //Debug.Log("In intersection, slow down");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
 
@@ -212,13 +212,13 @@ public class CarMove : MonoBehaviour {
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            Debug.Log("decelerate");
+            //Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }
         else if (sharpTurn)
         {
-            Debug.Log("turning");
+            //Debug.Log("turning");
             wheelFL.motorTorque = maxAccelTorque / 7;
             wheelFR.motorTorque = maxAccelTorque / 7;
             //wheelFL.motorTorque = maxDecelTorque;
@@ -241,7 +241,7 @@ public class CarMove : MonoBehaviour {
     {
         if (isBraking)
         {
-            Debug.Log("Braking");
+            //Debug.Log("Braking");
             wheelRL.brakeTorque = maxBrakeTorque;
             wheelRR.brakeTorque = maxBrakeTorque;
         }
