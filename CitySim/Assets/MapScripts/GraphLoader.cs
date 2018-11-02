@@ -82,6 +82,7 @@ class GraphLoader : InfrastructureBehaviour
                 graph.AddNode(currPos);
                 graph.AddNode(nextPos);
 
+                //Get graphNode reference
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
@@ -100,21 +101,21 @@ class GraphLoader : InfrastructureBehaviour
         }
     }
 
-    //void OnDrawGizmos()
-    //{
-    //    if (IsReady == true)
-    //    {
-    //        //Debug.Log("making gizmos");
-    //        Gizmos.color = Color.red;
-    //        foreach (var point in graph.nodes)
-    //        {
-    //            Gizmos.DrawWireSphere(point.Key, 1f);
-    //            //foreach (var neighbor in graph.nodes[point.Key].neighbors)
-    //            //{
-    //            //    Gizmos.DrawLine(point.Key, neighbor.position);
-    //            //}
-    //        }
+    void OnDrawGizmos()
+    {
+        if (IsReady == true)
+        {
+            //Debug.Log("making gizmos");
+            Gizmos.color = Color.red;
+            foreach (var point in graph.nodes)
+            {
+                Gizmos.DrawWireSphere(point.Key, 1f);
+                foreach (var neighbor in graph.nodes[point.Key].neighbors)
+                {
+                    Gizmos.DrawLine(point.Key, neighbor.position);
+                }
+            }
 
-    //    }
-    //}
+        }
+    }
 }
