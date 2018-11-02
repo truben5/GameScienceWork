@@ -56,9 +56,25 @@ class GraphLoader : InfrastructureBehaviour
                 Vector3 currPos = p1 - map.bounds.Center;
                 Vector3 nextPos = p2 - map.bounds.Center;
 
-                wayPoints.Add(currPos);
+                if (way.Lanes ==2)
+                {
+                    //Debug.Log(i);
+                    //GraphNode[] paths = new GraphNode[way.Lanes];
+                    Vector3 lane1C = currPos - (cross / 2);
+                    Vector3 lane1N = nextPos - (cross / 2);
+                    UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(lane1C);
 
-                UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+                    Vector3 lane2C = currPos + (cross / 2);
+                    Vector3 lane2N = nextPos + (cross / 2);
+                    UpdateGraph(lane2C, lane2N, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(lane2C);
+                }
+                else
+                {
+                    UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(currPos);
+                }
 
                 yield return null;
 
@@ -92,6 +108,10 @@ class GraphLoader : InfrastructureBehaviour
             else if (currI > 1 && currI < maxI)
             {
                 graph.AddNode(nextPos);
+                if (!graph.nodes.ContainsKey(currPos))
+                {
+                    graph.AddNode(currPos);
+                }
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
@@ -110,10 +130,10 @@ class GraphLoader : InfrastructureBehaviour
             foreach (var point in graph.nodes)
             {
                 Gizmos.DrawWireSphere(point.Key, 1f);
-                //foreach (var neighbor in graph.nodes[point.Key].neighbors)
-                //{
-                 //   Gizmos.DrawLine(point.Key, neighbor.position);
-                //}
+                foreach (var neighbor in graph.nodes[point.Key].neighbors)
+                {
+                    Gizmos.DrawLine(point.Key, neighbor.position);
+                }
             }
 
         }

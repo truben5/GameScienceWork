@@ -15,8 +15,10 @@ public class MapGraph {
     {
         if (!nodes.ContainsKey(v))
         {
+            //Debug.Log("Trying to add " + v);
             GraphNode vNode = new GraphNode(v);
-            nodes[v] = vNode;
+            nodes.Add(v, vNode);
+            //nodes[v] = vNode;
         }
     }
 
