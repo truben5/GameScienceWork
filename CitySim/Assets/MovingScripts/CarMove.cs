@@ -62,14 +62,6 @@ public class CarMove : MonoBehaviour {
 
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
 
-        // Store all wayPoints in path
-        //GameObject path = GameObject.Find("Path");
-        //totalPoints = path.transform.childCount;
-        //for (int i = 0; i < totalPoints; i++)
-        //{
-        //    wayPoints.Add(path.transform.GetChild(i));
-        //}
-
         if(navMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component not attached to " + gameObject.name);
@@ -80,6 +72,7 @@ public class CarMove : MonoBehaviour {
             //navMeshAgent.SetDestination(destination);
 
             // Start navmesh agent moving towards first point
+            // Assign total number of waypoints
             navMeshAgent.SetDestination(wayPoints[0]);
             totalPoints = wayPoints.Count;
             //Debug.Log(wayPoints.Count);
@@ -141,18 +134,18 @@ public class CarMove : MonoBehaviour {
     private void CheckCarDistance()
     {
         float carDist = Vector3.Distance(navMeshAgent.transform.position, GetComponent<Rigidbody>().transform.position);
+        // If distance to car is larger than the allowed max distance then slow the navMeshAgent
         if (carDist > maxDistFromCar)
         {
-            //Debug.Log("Too far");
             navMeshAgent.velocity = navMeshAgent.velocity / 1.5f;
             //navMeshAgent.velocity = GetComponent<Rigidbody>().velocity;
             navMeshAgent.speed = maxNavSpeed / 1.5f;
         }
+        // If distance to car is less than the allowed min distances then speed up navMeshAgents
         else if (carDist < minDistFromCar)
         {
             //Debug.Log("Too close");
             navMeshAgent.velocity = navMeshAgent.velocity * 1.7f;
-            //Debug.Log(GetComponent<Rigidbody>().velocity + " vs " + navMeshAgent.velocity);
             //navMeshAgent.velocity = na;
             //navMeshAgent.speed = maxNavSpeed * 1.5f;
             //maxSpeed += 1;
@@ -163,8 +156,7 @@ public class CarMove : MonoBehaviour {
     private void Steer()
     {
         Vector3 relativeDest = navMeshAgent.nextPosition;
-        // Offset for right side of road? Unsure if needed
-        //relativeDest.x = relativeDest.x + 1.5f;
+        // Vector from current position to relative destination
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
         if (newSteer > 12f || newSteer < -12f)
