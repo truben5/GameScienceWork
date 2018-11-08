@@ -95,10 +95,12 @@ public class CarMove : MonoBehaviour {
         if (!reachedDest)
         {
             Steer();
+            //Debug.Log("calling drive");
             Drive();
         }
         else
         {
+            //Debug.Log("Reached dest");
             wheelFL.brakeTorque = maxBrakeTorque;
             wheelFR.brakeTorque = maxBrakeTorque;
         }
@@ -126,7 +128,7 @@ public class CarMove : MonoBehaviour {
                 reachedDest = true;
                 return;
             }
-            Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
+            //Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
             navMeshAgent.SetDestination(wayPoints[currPoint]);
         }
     }
@@ -186,7 +188,7 @@ public class CarMove : MonoBehaviour {
         //Debug.Log(inIntersection);
         if (inIntersection && triggerCount == 1)
         {
-            //Debug.Log("In intersection, slow down");
+            Debug.Log("In intersection at red light, slow down");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
 
@@ -204,13 +206,13 @@ public class CarMove : MonoBehaviour {
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            //Debug.Log("decelerate");
+            Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }
         else if (sharpTurn)
         {
-            //Debug.Log("turning");
+            Debug.Log("turning");
             wheelFL.motorTorque = maxAccelTorque / 7;
             wheelFR.motorTorque = maxAccelTorque / 7;
             //wheelFL.motorTorque = maxDecelTorque;

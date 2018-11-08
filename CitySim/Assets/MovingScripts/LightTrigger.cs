@@ -27,7 +27,7 @@ public class LightTrigger : MonoBehaviour {
         // If not in intersection already 
         if (!inIntersection && lightState == 0)
         {
-            Debug.Log("see red light");
+            Debug.Log("is red light");
             other.GetComponentInParent<CarMove>().triggerCount++;
             other.GetComponentInParent<CarMove>().inIntersection = true;
         }
@@ -51,7 +51,7 @@ public class LightTrigger : MonoBehaviour {
         //Debug.Log(lightState);
         if (inIntersection && lightState == 2)
         {
-            Debug.Log("see green");
+            Debug.Log("light is green");
             other.GetComponentInParent<CarMove>().inIntersection = false;
         }
     }
