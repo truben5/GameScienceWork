@@ -75,6 +75,8 @@ class GraphLoader : InfrastructureBehaviour
                         {
                             graph.AddNode(currPos, lane1C);
                             graph.AddNode(nextPos, lane1N);
+                            graph.AddNode(lane1C);
+                            graph.AddNode(lane1N);
                         }
                     }
                     UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
@@ -136,6 +138,8 @@ class GraphLoader : InfrastructureBehaviour
         }
     }
 
+    // Check if connector to multilane road merges correctly
+    // Makes sure the key is the multilane node but the location is the outer lane
     private bool CheckMultiLaneConnection(Vector3 key, Vector3 nodeLocation)
     {
         if (!graph.nodes.ContainsKey(key) || graph.nodes[key].position != nodeLocation)
@@ -153,8 +157,8 @@ class GraphLoader : InfrastructureBehaviour
             Gizmos.color = Color.red;
             foreach (var point in graph.nodes)
             {
-                Gizmos.DrawWireSphere(point.Key, 1f);
-                foreach (var neighbor in graph.nodes[point.Key].neighbors)
+                Gizmos.DrawWireSphere(point.Value.position, 1f);
+                foreach (var neighbor in graph.nodes[point.Value.position].neighbors)
                 {
                     Gizmos.DrawLine(point.Value.position, neighbor.position);
                 }
