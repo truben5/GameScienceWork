@@ -133,7 +133,7 @@ public class CarMove : MonoBehaviour {
                 reachedDest = true;
                 return;
             }
-            //Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
+            Debug.Log("moving to next waypoint" + wayPoints[currPoint]);
             navMeshAgent.SetDestination(wayPoints[currPoint]);
         }
     }

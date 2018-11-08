@@ -60,23 +60,31 @@ class GraphLoader : InfrastructureBehaviour
                 {
                     //Debug.Log(i);
                     //GraphNode[] paths = new GraphNode[way.Lanes];
+                    // Split central node into two lane nodes
                     Vector3 lane1C = currPos - (cross / 2);
                     Vector3 lane1N = nextPos - (cross / 2);
 
+                    // Check if this is a valid connector to the multilane road
+                    // (key) currPos -> (value) lane1C
+                    // (key) nextPos -> (value) lane1N
+                    // (key) lane1C -> (value) lane1C
+                    // (key) lane1N -> (value) lane1N
                     bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
                     if (!validConnector)
                     {
+                        // If all nodes are present in graph then make sure that the currPos and nextPos key has the value of lane1C and lane1N respectively
                         if (graph.nodes.ContainsKey(currPos) && graph.nodes.ContainsKey(nextPos) && graph.nodes.ContainsKey(lane1C) && graph.nodes.ContainsKey(lane1N))
                         {
                             graph.nodes[currPos] = graph.nodes[lane1C];
                             graph.nodes[nextPos] = graph.nodes[lane1N];
                         }
+                        // If not all present, call addNode for all of them. Setting the currPos and nextPos to the value of lane1C and lane1C
                         else
                         {
-                            graph.AddNode(currPos, lane1C);
-                            graph.AddNode(nextPos, lane1N);
                             graph.AddNode(lane1C);
                             graph.AddNode(lane1N);
+                            graph.AddNode(currPos, lane1C);
+                            graph.AddNode(nextPos, lane1N);
                         }
                     }
                     UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
@@ -163,7 +171,6 @@ class GraphLoader : InfrastructureBehaviour
                     Gizmos.DrawLine(point.Value.position, neighbor.position);
                 }
             }
-
         }
     }
 }
