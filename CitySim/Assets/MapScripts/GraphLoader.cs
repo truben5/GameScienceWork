@@ -62,6 +62,18 @@ class GraphLoader : InfrastructureBehaviour
                     //GraphNode[] paths = new GraphNode[way.Lanes];
                     Vector3 lane1C = currPos - (cross / 2);
                     Vector3 lane1N = nextPos - (cross / 2);
+                    bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
+                    if (!validConnector)
+                    {
+                        if (graph.nodes.ContainsKey(currPos))
+                        {
+                            graph.nodes[lane1C] = graph.nodes[currPos];
+                        }
+                        else
+                        {
+                            graph.AddNode(lane1C, currPos);
+                        }
+                    }
                     UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
                     wayPoints.Add(lane1C);
 
@@ -121,6 +133,15 @@ class GraphLoader : InfrastructureBehaviour
         }
     }
 
+    private bool CheckMultiLaneConnection(Vector3 key, Vector3 nodeLocation)
+    {
+        if (!graph.nodes.ContainsKey(key) || graph.nodes[key].position != nodeLocation)
+        {
+            return false;
+        }
+        return true;
+    }
+
     void OnDrawGizmos()
     {
         if (IsReady == true)
@@ -132,7 +153,7 @@ class GraphLoader : InfrastructureBehaviour
                 Gizmos.DrawWireSphere(point.Key, 1f);
                 foreach (var neighbor in graph.nodes[point.Key].neighbors)
                 {
-                    Gizmos.DrawLine(point.Key, neighbor.position);
+                    Gizmos.DrawLine(point.Value.position, neighbor.position);
                 }
             }
 

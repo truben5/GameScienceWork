@@ -22,6 +22,15 @@ public class MapGraph {
         }
     }
 
+    public void AddNode(Vector3 key, Vector3 pair)
+    {
+        if (!nodes.ContainsKey(key))
+        {
+            GraphNode newNode = new GraphNode(pair);
+            nodes.Add(key,newNode);
+        }
+    }
+
     public List<Vector3> ShortestPath(GraphNode start, GraphNode end)
     {
         Dictionary<GraphNode, float> distanceToEnd = new Dictionary<GraphNode, float>();
