@@ -29,6 +29,16 @@ public class MapGraph {
             GraphNode newNode = new GraphNode(pair);
             nodes.Add(key,newNode);
         }
+        //else if(!nodes.ContainsKey(pair))
+        //{
+        //    //GraphNode newNode = new GraphNode(pair);
+        //    AddNode(pair);
+        //    nodes[key] = nodes[pair];
+        //}
+        //else
+        //{
+        //    nodes[key] = nodes[pair];
+        //}
     }
 
     public List<Vector3> ShortestPath(GraphNode start, GraphNode end)

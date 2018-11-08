@@ -62,16 +62,19 @@ class GraphLoader : InfrastructureBehaviour
                     //GraphNode[] paths = new GraphNode[way.Lanes];
                     Vector3 lane1C = currPos - (cross / 2);
                     Vector3 lane1N = nextPos - (cross / 2);
+
                     bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
                     if (!validConnector)
                     {
-                        if (graph.nodes.ContainsKey(currPos))
+                        if (graph.nodes.ContainsKey(currPos) && graph.nodes.ContainsKey(nextPos) && graph.nodes.ContainsKey(lane1C) && graph.nodes.ContainsKey(lane1N))
                         {
-                            graph.nodes[lane1C] = graph.nodes[currPos];
+                            graph.nodes[currPos] = graph.nodes[lane1C];
+                            graph.nodes[nextPos] = graph.nodes[lane1N];
                         }
                         else
                         {
-                            graph.AddNode(lane1C, currPos);
+                            graph.AddNode(currPos, lane1C);
+                            graph.AddNode(nextPos, lane1N);
                         }
                     }
                     UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
