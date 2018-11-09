@@ -15,7 +15,10 @@ public class LightTrigger : MonoBehaviour {
     {
         /* Should only do this if trigger is 0 */
 
-
+        if (other.name.Equals("Rear"))
+        {
+            return;
+        }
         //Debug.Log("hit trigger");
         bool inIntersection = other.GetComponentInParent<CarMove>().inIntersection;
         //Debug.Log(inIntersection);
@@ -29,17 +32,18 @@ public class LightTrigger : MonoBehaviour {
         //Debug.Log("light state is: " + lightState + " and inIntersection is: " + inIntersection);
         if (!inIntersection && lightState == 0)
         {
-            //Debug.Log("is red light");
+            Debug.Log("is red light");
             other.GetComponentInParent<CarMove>().triggerCount++;
             other.GetComponentInParent<CarMove>().inIntersection = true;
         }
         // If already in intersection then hitting other collider should have no effect
         else 
         {
+            Debug.Log("is yellow or green light");
             other.GetComponentInParent<CarMove>().triggerCount++;
             other.GetComponentInParent<CarMove>().inIntersection = false;
         }
-        //Debug.Log("inIntersection is: " + other.GetComponentInParent<CarMove>().inIntersection);
+        Debug.Log("inIntersection is: " + other.GetComponentInParent<CarMove>().inIntersection);
         //Debug.Log(other.GetComponentInParent<CarMove>().triggerCount);
         
     }

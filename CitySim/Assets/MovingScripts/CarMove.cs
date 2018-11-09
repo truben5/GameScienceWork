@@ -35,6 +35,8 @@ public class CarMove : MonoBehaviour {
     private float currentSpeed;
     private bool sharpTurn = false;
     private bool reachedDest = false;
+    private bool slowTraffic = false;
+    private float maxTrafficBuffer;
 
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;
@@ -62,14 +64,14 @@ public class CarMove : MonoBehaviour {
 
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
 
+        maxTrafficBuffer = sensorLength;
+
         if(navMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component not attached to " + gameObject.name);
         }
         else
         {
-            
-            //navMeshAgent.SetDestination(destination);
 
             // Start navmesh agent moving towards first point
             // Assign total number of waypoints
@@ -95,7 +97,6 @@ public class CarMove : MonoBehaviour {
         if (!reachedDest)
         {
             Steer();
-            //Debug.Log("calling drive");
             Drive();
         }
         else
@@ -179,23 +180,29 @@ public class CarMove : MonoBehaviour {
     {
         // calculate current speed
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
-        // Reset counter if hit 4 triggers
+        // Reset counter if hit 2 triggers
         triggerCount = triggerCount % 2;
         //Debug.Log(triggerCount);
         //Debug.Log("Current speed is: " + currentSpeed);
         //Debug.Log("isbrake is " + isBraking);
         //Debug.Log(currentSpeed);
         //Debug.Log(inIntersection);
+        Debug.Log(slowTraffic);
         if (inIntersection && triggerCount == 1)
         {
-            Debug.Log("In intersection at red light, slow down");
+            //Debug.Log("In intersection at red light, slow down");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
 
             wheelFL.brakeTorque = maxBrakeTorque;
             wheelFR.brakeTorque = maxBrakeTorque;
         }
-
+        else if (slowTraffic)
+        {
+            Debug.Log("see rear of another car");
+            wheelFL.motorTorque = 0;
+            wheelFL.motorTorque = 0;
+        }
         else if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
             wheelFL.brakeTorque = 0;
@@ -206,7 +213,7 @@ public class CarMove : MonoBehaviour {
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            //Debug.Log("decelerate");
+            Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }
@@ -250,20 +257,24 @@ public class CarMove : MonoBehaviour {
     {
         RaycastHit hit;
         Vector3 sensorStartingPos = transform.position;
-        sensorStartingPos.z += frontSensorPos;
+        //sensorStartingPos.z += frontSensorPos;
         sensorStartingPos.y += 1;
+        int traffDistance = 
+        // Show hit if raycast hits rear of another car
 
         // Front center sensor
         if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
-            
+            Debug.Log("hit rear");
+            slowTraffic = true;
             Debug.DrawLine(sensorStartingPos, hit.point);
         }
 
         // Front right sensor
         sensorStartingPos.x += frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
+            slowTraffic = true;
             Debug.DrawLine(sensorStartingPos, hit.point);
         }
 
@@ -275,8 +286,9 @@ public class CarMove : MonoBehaviour {
 
         // Front left sensor
         sensorStartingPos.x -= 2 * frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
+            slowTraffic = true;
             Debug.DrawLine(sensorStartingPos, hit.point);
         }
 
@@ -285,6 +297,11 @@ public class CarMove : MonoBehaviour {
         //{
         //    Debug.DrawLine(sensorStartingPos, hit.point);
         //}
+
+        if (!Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) || !hit.collider.name.Equals("Rear"))
+        {
+            slowTraffic = false;
+        }
 
     }
 }
