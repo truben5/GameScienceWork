@@ -93,7 +93,7 @@ public class LightChange : MonoBehaviour {
         }
         else if (RLmode == 2)
         {
-            //Debug.Log("RL go from green to yellow");
+            //Debug.Log("RL from green to yellow");
             RLmode = 1;
 
             RCollider.GetComponent<LightTrigger>().state = 1;
@@ -108,6 +108,7 @@ public class LightChange : MonoBehaviour {
         }
         else if (RLmode == 1)
         {
+            //Debug.Log("RL going from green to red, FB going from red to green");
             RLmode = 0;
             FBMode = 2;
 
@@ -147,7 +148,7 @@ public class LightChange : MonoBehaviour {
         // If front and back are red change FB to green
         else if (FBMode == 0)
         {
-            //Debug.Log("FB red to go, RL to red");
+            //Debug.Log("FB red to green, RL to red");
             FBMode = 2;
             RLmode = 0;
 
@@ -168,5 +169,6 @@ public class LightChange : MonoBehaviour {
             LBot.GetComponent<Renderer>().material = off;
             LTop.GetComponent<Renderer>().material = stop;
         }
+        //Debug.Log("FB: " + FBMode + " RL: " + RLmode);
     }
 }

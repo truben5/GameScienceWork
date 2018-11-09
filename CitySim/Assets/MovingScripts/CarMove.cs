@@ -161,7 +161,7 @@ public class CarMove : MonoBehaviour {
         // Vector from current position to relative destination
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
-        if (newSteer > 12f || newSteer < -12f)
+        if (newSteer > 12f || newSteer < -12f && currentSpeed > maxSpeed / 2)
         {
             sharpTurn = true;
         }
@@ -206,13 +206,13 @@ public class CarMove : MonoBehaviour {
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            Debug.Log("decelerate");
+            //Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }
         else if (sharpTurn)
         {
-            Debug.Log("turning");
+            //Debug.Log("turning");
             wheelFL.motorTorque = maxAccelTorque / 7;
             wheelFR.motorTorque = maxAccelTorque / 7;
             //wheelFL.motorTorque = maxDecelTorque;
@@ -248,40 +248,40 @@ public class CarMove : MonoBehaviour {
 
     private void Sensor()
     {
-        RaycastHit hit;
-        Vector3 sensorStartingPos = transform.position;
-        sensorStartingPos.z += frontSensorPos;
+        //RaycastHit hit;
+        //Vector3 sensorStartingPos = transform.position;
+        //sensorStartingPos.z += frontSensorPos;
 
-        // Front center sensor
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        {
-            Debug.DrawLine(sensorStartingPos, hit.point);
-        }
-        // Front right sensor
-        sensorStartingPos.x += frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        {
-            Debug.DrawLine(sensorStartingPos, hit.point);
-        }
+        //// Front center sensor
+        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        //{
+        //    Debug.DrawLine(sensorStartingPos, hit.point);
+        //}
+        //// Front right sensor
+        //sensorStartingPos.x += frontSideSensorPos;
+        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        //{
+        //    Debug.DrawLine(sensorStartingPos, hit.point);
+        //}
 
-        // Front right angle sensor
-        if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
-        {
-            Debug.DrawLine(sensorStartingPos, hit.point);
-        }
+        //// Front right angle sensor
+        //if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
+        //{
+        //    Debug.DrawLine(sensorStartingPos, hit.point);
+        //}
 
-        // Front left sensor
-        sensorStartingPos.x -= 2 * frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        {
-            Debug.DrawLine(sensorStartingPos, hit.point);
-        }
+        //// Front left sensor
+        //sensorStartingPos.x -= 2 * frontSideSensorPos;
+        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        //{
+        //    Debug.DrawLine(sensorStartingPos, hit.point);
+        //}
 
-        // Front left angle sensor
-        if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
-        {
-            Debug.DrawLine(sensorStartingPos, hit.point);
-        }
+        //// Front left angle sensor
+        //if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
+        //{
+        //    Debug.DrawLine(sensorStartingPos, hit.point);
+        //}
 
     }
 }

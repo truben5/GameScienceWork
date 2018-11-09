@@ -23,11 +23,13 @@ public class LightTrigger : MonoBehaviour {
 
         // Determine light state
         CheckLightState();
+        //Debug.Log(lightState);
 
         // If not in intersection already 
+        //Debug.Log("light state is: " + lightState + " and inIntersection is: " + inIntersection);
         if (!inIntersection && lightState == 0)
         {
-            Debug.Log("is red light");
+            //Debug.Log("is red light");
             other.GetComponentInParent<CarMove>().triggerCount++;
             other.GetComponentInParent<CarMove>().inIntersection = true;
         }
@@ -37,8 +39,8 @@ public class LightTrigger : MonoBehaviour {
             other.GetComponentInParent<CarMove>().triggerCount++;
             other.GetComponentInParent<CarMove>().inIntersection = false;
         }
-        Debug.Log("local var is: " + inIntersection);
-        Debug.Log("inIntersection is: " + other.GetComponentInParent<CarMove>().inIntersection);
+        //Debug.Log("inIntersection is: " + other.GetComponentInParent<CarMove>().inIntersection);
+        //Debug.Log(other.GetComponentInParent<CarMove>().triggerCount);
         
     }
 
@@ -47,11 +49,11 @@ public class LightTrigger : MonoBehaviour {
         bool inIntersection = other.GetComponentInParent<CarMove>().inIntersection;
         CheckLightState();
         //string lightColor = lights.transform.GetChild(0).GetComponent<Renderer>().material.name;
-        //Debug.Log("staying in");
+        //Debug.Log("staying in and lightState is: " + lightState);
         //Debug.Log(lightState);
         if (inIntersection && lightState == 2)
         {
-            Debug.Log("light is green");
+            //Debug.Log("light is green");
             other.GetComponentInParent<CarMove>().inIntersection = false;
         }
     }
@@ -65,11 +67,12 @@ public class LightTrigger : MonoBehaviour {
     private void CheckLightState()
     {
         // Determine light state based on collider name
-        if (this.name[0].Equals("L") || this.name[0].Equals('R'))
+        if (this.name[0].Equals('L') || this.name[0].Equals('R'))
         {
+            
             lightState = streetLight.GetComponent<LightChange>().RLmode;
         }
-        else
+        else if (this.name[0].Equals('F') || this.name[0].Equals('B'))
         {
             lightState = streetLight.GetComponent<LightChange>().FBMode;
         }
