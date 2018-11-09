@@ -248,21 +248,24 @@ public class CarMove : MonoBehaviour {
 
     private void Sensor()
     {
-        //RaycastHit hit;
-        //Vector3 sensorStartingPos = transform.position;
-        //sensorStartingPos.z += frontSensorPos;
+        RaycastHit hit;
+        Vector3 sensorStartingPos = transform.position;
+        sensorStartingPos.z += frontSensorPos;
+        sensorStartingPos.y += 1;
 
-        //// Front center sensor
-        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        //{
-        //    Debug.DrawLine(sensorStartingPos, hit.point);
-        //}
-        //// Front right sensor
-        //sensorStartingPos.x += frontSideSensorPos;
-        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        //{
-        //    Debug.DrawLine(sensorStartingPos, hit.point);
-        //}
+        // Front center sensor
+        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
+        {
+            
+            Debug.DrawLine(sensorStartingPos, hit.point);
+        }
+
+        // Front right sensor
+        sensorStartingPos.x += frontSideSensorPos;
+        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        {
+            Debug.DrawLine(sensorStartingPos, hit.point);
+        }
 
         //// Front right angle sensor
         //if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(-frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))
@@ -270,12 +273,12 @@ public class CarMove : MonoBehaviour {
         //    Debug.DrawLine(sensorStartingPos, hit.point);
         //}
 
-        //// Front left sensor
-        //sensorStartingPos.x -= 2 * frontSideSensorPos;
-        //if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
-        //{
-        //    Debug.DrawLine(sensorStartingPos, hit.point);
-        //}
+        // Front left sensor
+        sensorStartingPos.x -= 2 * frontSideSensorPos;
+        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength))
+        {
+            Debug.DrawLine(sensorStartingPos, hit.point);
+        }
 
         //// Front left angle sensor
         //if (Physics.Raycast(sensorStartingPos, Quaternion.AngleAxis(frontSensorAngle, transform.up) * transform.forward, out hit, sensorLength))

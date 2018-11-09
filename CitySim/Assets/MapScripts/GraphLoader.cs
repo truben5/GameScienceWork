@@ -100,9 +100,7 @@ class GraphLoader : InfrastructureBehaviour
                     UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
                     wayPoints.Add(currPos);
                 }
-
                 yield return null;
-
             }
 
         }
