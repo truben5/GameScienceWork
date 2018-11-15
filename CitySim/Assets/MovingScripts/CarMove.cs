@@ -20,9 +20,9 @@ public class CarMove : MonoBehaviour {
     // Variables dealing with sensors
     [Header("Sensors")]
     public float sensorLength = 25f;
-    public float frontSensorPos = -1.7f;
-    public float frontSideSensorPos = 1.1f;
-    public float frontSensorAngle = 40;
+    public Transform frontSensorPos;
+    public Transform frontRightSensorPos;
+    public Transform frontLeftSensorPos;
 
     // Variables dealing with movement
     [Header("Car Movement")]
@@ -256,26 +256,21 @@ public class CarMove : MonoBehaviour {
     private void Sensor()
     {
         RaycastHit hit;
-        Vector3 sensorStartingPos = transform.position;
-        //sensorStartingPos.z += frontSensorPos;
-        sensorStartingPos.y += 1;
-        int traffDistance = 
         // Show hit if raycast hits rear of another car
 
         // Front center sensor
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
+        if (Physics.Raycast(frontSensorPos.position, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
             Debug.Log("hit rear");
             slowTraffic = true;
-            Debug.DrawLine(sensorStartingPos, hit.point);
+            Debug.DrawLine(frontSensorPos.position, hit.point);
         }
 
         // Front right sensor
-        sensorStartingPos.x += frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
+        if (Physics.Raycast(frontRightSensorPos.position, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
             slowTraffic = true;
-            Debug.DrawLine(sensorStartingPos, hit.point);
+            Debug.DrawLine(frontRightSensorPos.position, hit.point);
         }
 
         //// Front right angle sensor
@@ -285,11 +280,10 @@ public class CarMove : MonoBehaviour {
         //}
 
         // Front left sensor
-        sensorStartingPos.x -= 2 * frontSideSensorPos;
-        if (Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
+        if (Physics.Raycast(frontLeftSensorPos.position, transform.forward.normalized, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
             slowTraffic = true;
-            Debug.DrawLine(sensorStartingPos, hit.point);
+            Debug.DrawLine(frontLeftSensorPos.position, hit.point);
         }
 
         //// Front left angle sensor
@@ -298,7 +292,7 @@ public class CarMove : MonoBehaviour {
         //    Debug.DrawLine(sensorStartingPos, hit.point);
         //}
 
-        if (!Physics.Raycast(sensorStartingPos, transform.forward, out hit, sensorLength) || !hit.collider.name.Equals("Rear"))
+        if (hit.collider == null|| !hit.collider.name.Equals("Rear"))
         {
             slowTraffic = false;
         }

@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1046722405630948}
   m_IsPrefabParent: 1
+--- !u!1 &1020700100266752
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4959089514181282}
+  m_Layer: 0
+  m_Name: Sensors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1046722405630948
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +173,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1661549666434982
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4841006965923030}
+  m_Layer: 0
+  m_Name: Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1711806859196688
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +255,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1873604638142906
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4897564821983978}
+  m_Layer: 0
+  m_Name: Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1886895967357282
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4750337268323188}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1929783726546152
 GameObject:
   m_ObjectHideFlags: 1
@@ -262,17 +322,18 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1046722405630948}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 33.798126, y: 0.25, z: 69.4244}
+  m_LocalRotation: {x: -0.00000035203993, y: -0.9914449, z: 0.00000086426735, w: -0.130526}
+  m_LocalPosition: {x: 33.83682, y: 0.24110296, z: 68.34401}
   m_LocalScale: {x: 1.52, y: 1.85, z: 1.79}
   m_Children:
   - {fileID: 4026708657787462}
   - {fileID: 4654651127842898}
   - {fileID: 4536759071621690}
   - {fileID: 4718041174674378}
+  - {fileID: 4959089514181282}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -195, z: 0}
 --- !u!4 &4224121609595712
 Transform:
   m_ObjectHideFlags: 1
@@ -357,8 +418,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1453891074350292}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.21}
+  m_LocalRotation: {x: -0.0000009028238, y: -0, z: -0.00000023621887, w: 1}
+  m_LocalPosition: {x: 0.9373534, y: 0.004815447, z: 5.627306}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4100700405234930}
@@ -418,11 +479,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1386339777815466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.725, z: -0.71}
-  m_LocalScale: {x: 1.29, y: 0.86, z: 0.43}
+  m_LocalPosition: {x: 0, y: 0.725, z: -0.543}
+  m_LocalScale: {x: 1.29, y: 0.86, z: 0.77}
   m_Children: []
   m_Father: {fileID: 4100700405234930}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4750337268323188
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1886895967357282}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4959089514181282}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4834868687077278
 Transform:
@@ -437,6 +511,48 @@ Transform:
   m_Father: {fileID: 4654651127842898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+--- !u!4 &4841006965923030
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1661549666434982}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0.000000059604645, z: 0}
+  m_LocalScale: {x: 1.0000011, y: 1, z: 1.0000012}
+  m_Children: []
+  m_Father: {fileID: 4959089514181282}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4897564821983978
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1873604638142906}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5, y: 0.000000059604645, z: 0}
+  m_LocalScale: {x: 1.0000011, y: 1, z: 1.0000012}
+  m_Children: []
+  m_Father: {fileID: 4959089514181282}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4959089514181282
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1020700100266752}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.7, z: 0.804}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4750337268323188}
+  - {fileID: 4841006965923030}
+  - {fileID: 4897564821983978}
+  m_Father: {fileID: 4100700405234930}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &23022426755673904
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -745,9 +861,9 @@ MonoBehaviour:
   - {x: -8.39, y: 1.54, z: -23.9}
   - {x: 36.5, y: 1.54, z: -23.9}
   sensorLength: 25
-  frontSensorPos: -1.66
-  frontSideSensorPos: 0.9
-  frontSensorAngle: 40
+  frontSensorPos: {fileID: 4750337268323188}
+  frontRightSensorPos: {fileID: 4841006965923030}
+  frontLeftSensorPos: {fileID: 4897564821983978}
   maxSteerAngle: 40
   maxSpeed: 200
   maxAccelTorque: 100
@@ -888,7 +1004,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1.5
-  m_Speed: 3.5
+  m_Speed: 3.3333333
   m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
