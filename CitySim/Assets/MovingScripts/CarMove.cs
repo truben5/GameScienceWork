@@ -23,6 +23,7 @@ public class CarMove : MonoBehaviour {
     public Transform frontSensorPos;
     public Transform frontRightSensorPos;
     public Transform frontLeftSensorPos;
+    private float distanceRatio = 1;
 
     // Variables dealing with movement
     [Header("Car Movement")]
@@ -36,7 +37,7 @@ public class CarMove : MonoBehaviour {
     private bool sharpTurn = false;
     private bool reachedDest = false;
     private bool slowTraffic = false;
-    private float maxTrafficBuffer;
+    //private float maxTrafficBuffer;
 
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;
@@ -64,28 +65,22 @@ public class CarMove : MonoBehaviour {
 
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
 
-        maxTrafficBuffer = sensorLength;
-
         if(navMeshAgent == null)
         {
             Debug.LogError("NavMeshAgent component not attached to " + gameObject.name);
         }
         else
         {
-
             // Start navmesh agent moving towards first point
             // Assign total number of waypoints
             navMeshAgent.SetDestination(wayPoints[0]);
             totalPoints = wayPoints.Count;
-            //Debug.Log(wayPoints.Count);
-            //Debug.Log(navMeshAgent.GetComponent<NavMeshAgent>().pathEndPosition);
         }
 	}
 
 
     // Update is called once per frame
     void Update () {
-        //Debug.Log("update");
         navMeshAgent.transform.position = navMeshAgent.nextPosition;
         CheckCarDistance();
         CheckWayPointDistance();
@@ -93,7 +88,6 @@ public class CarMove : MonoBehaviour {
 
     void FixedUpdate()
     {
-        //Debug.Log("Fixed update");
         if (!reachedDest)
         {
             Steer();
@@ -149,9 +143,6 @@ public class CarMove : MonoBehaviour {
         {
             //Debug.Log("Too close");
             navMeshAgent.velocity = navMeshAgent.velocity * 1.7f;
-            //navMeshAgent.velocity = na;
-            //navMeshAgent.speed = maxNavSpeed * 1.5f;
-            //maxSpeed += 1;
             navMeshAgent.speed = maxNavSpeed * 1.6f;
         }
     }
@@ -173,7 +164,6 @@ public class CarMove : MonoBehaviour {
         wheelFL.steerAngle = newSteer;
         wheelFR.steerAngle = newSteer;
         //navMeshAgent.Move(relativeVect);
-
     }
 
     private void Drive()
@@ -187,7 +177,7 @@ public class CarMove : MonoBehaviour {
         //Debug.Log("isbrake is " + isBraking);
         //Debug.Log(currentSpeed);
         //Debug.Log(inIntersection);
-        Debug.Log(slowTraffic);
+        //Debug.Log(slowTraffic);
         if (inIntersection && triggerCount == 1)
         {
             //Debug.Log("In intersection at red light, slow down");
@@ -199,9 +189,23 @@ public class CarMove : MonoBehaviour {
         }
         else if (slowTraffic)
         {
+            // If car is moving and is close to car in front then stop accelerating and brake
+            if (distanceRatio < .15f && currentSpeed < maxSpeed / 5)
+            {
+                wheelFL.motorTorque = 0;
+                wheelFL.motorTorque = 0;
+                wheelFL.brakeTorque = maxBrakeTorque * distanceRatio;
+                wheelFR.brakeTorque = maxBrakeTorque * distanceRatio;
+            }
+            // If car is moving and is not super close to car in front then stop accelerating and lightly brake
+            else if (distanceRatio > .15f)
+            {
+                wheelFL.motorTorque = 0;
+                wheelFL.motorTorque = 0;
+                wheelFL.brakeTorque = .1f * maxBrakeTorque * distanceRatio;
+                wheelFR.brakeTorque = .1f * maxBrakeTorque * distanceRatio;
+            }
             Debug.Log("see rear of another car");
-            wheelFL.motorTorque = 0;
-            wheelFL.motorTorque = 0;
         }
         else if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
@@ -263,12 +267,21 @@ public class CarMove : MonoBehaviour {
         {
             Debug.Log("hit rear");
             slowTraffic = true;
+            // Calculate ratio of distance between cars and maxDistance of sensor. 
+            distanceRatio = hit.distance / sensorLength;
+            Debug.Log(distanceRatio);
             Debug.DrawLine(frontSensorPos.position, hit.point);
         }
 
         // Front right sensor
         if (Physics.Raycast(frontRightSensorPos.position, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
+            float ratioBuffer = hit.distance / sensorLength;
+            if (ratioBuffer < 1)
+            {
+                wheelFL.brakeTorque = maxBrakeTorque * ratioBuffer;
+                wheelFR.brakeTorque = maxBrakeTorque * ratioBuffer;
+            }
             slowTraffic = true;
             Debug.DrawLine(frontRightSensorPos.position, hit.point);
         }
