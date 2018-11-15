@@ -190,7 +190,7 @@ public class CarMove : MonoBehaviour {
         else if (slowTraffic)
         {
             // If car is moving and is close to car in front then stop accelerating and brake
-            if (distanceRatio < .1f && currentSpeed < maxSpeed / 5)
+            if (distanceRatio < .1f && currentSpeed > maxSpeed / 5)
             {
                 wheelFL.motorTorque = 0;
                 wheelFL.motorTorque = 0;
@@ -200,19 +200,19 @@ public class CarMove : MonoBehaviour {
             // If car is moving and is not super close to car in front then stop accelerating and lightly brake
             else if (distanceRatio > .1f && distanceRatio < .3f)
             {
-                wheelFL.motorTorque = 0;
-                wheelFL.motorTorque = 0;
+                //wheelFL.motorTorque = 0;
+                //wheelFL.motorTorque = 0;
                 wheelFL.brakeTorque = .1f * maxBrakeTorque * distanceRatio;
                 wheelFR.brakeTorque = .1f * maxBrakeTorque * distanceRatio;
             }
             else if (distanceRatio > .3f)
             {
-                wheelFL.motorTorque = 0;
-                wheelFL.motorTorque = 0;
+                wheelFL.motorTorque = wheelFL.motorTorque * .9f;
+                wheelFL.motorTorque = wheelFL.motorTorque * .9f;
                 wheelFL.brakeTorque = .05f * maxBrakeTorque * distanceRatio;
                 wheelFR.brakeTorque = .05f * maxBrakeTorque * distanceRatio;
             }
-            Debug.Log("see rear of another car");
+            //Debug.Log("see rear of another car");
         }
         else if (currentSpeed < maxSpeed && !isBraking && !sharpTurn)
         {
