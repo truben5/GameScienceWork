@@ -860,7 +860,7 @@ MonoBehaviour:
   - {x: -8.39, y: 1.54, z: 14.65}
   - {x: -8.39, y: 1.54, z: -23.9}
   - {x: 36.5, y: 1.54, z: -23.9}
-  sensorLength: 15
+  sensorLength: 12
   frontSensorPos: {fileID: 4750337268323188}
   frontRightSensorPos: {fileID: 4841006965923030}
   frontLeftSensorPos: {fileID: 4897564821983978}
