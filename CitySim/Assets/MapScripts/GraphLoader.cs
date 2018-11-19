@@ -7,6 +7,7 @@ class GraphLoader : InfrastructureBehaviour
 
     [System.NonSerialized]
     public MapGraph graph;
+    [System.NonSerialized]
     public  List<Vector3> wayPoints = new List<Vector3>();
 
     public bool IsReady { get; private set; }
@@ -88,7 +89,7 @@ class GraphLoader : InfrastructureBehaviour
                         }
                     }
                     UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
-                    wayPoints.Add(lane1C);
+                    //wayPoints.Add(lane1C);
 
                     Vector3 lane2C = currPos + (cross / 2);
                     Vector3 lane2N = nextPos + (cross / 2);
@@ -106,7 +107,15 @@ class GraphLoader : InfrastructureBehaviour
         }
         IsReady = true;
         Debug.Log("Completed Graph Loading");
-        //Debug.Log(graph.nodes.Count);
+        Debug.Log("Starting simplifying graph");
+        graph.SimplifyGraph();
+        foreach (KeyValuePair<Vector3, GraphNode> point in graph.nodes)
+        {
+            wayPoints.Add(point.Value.position);
+        }
+        Debug.Log(graph.nodes.Count);
+
+
     }
     private void UpdateGraph(Vector3 currPos, Vector3 nextPos, int currI, int maxI, int direction)
     {
@@ -171,4 +180,5 @@ class GraphLoader : InfrastructureBehaviour
             }
         }
     }
+
 }

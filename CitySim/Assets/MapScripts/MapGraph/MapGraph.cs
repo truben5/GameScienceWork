@@ -5,9 +5,11 @@ using System.Linq;
 public class MapGraph {
 
     public Dictionary<Vector3, GraphNode> nodes;
+    //private string savePath;
 
     public MapGraph()
     {
+        //this.savePath = Application.persistentDataPath + "/graph.dat";
         nodes = new Dictionary<Vector3, GraphNode>();
     }
 
@@ -116,6 +118,78 @@ public class MapGraph {
         }
         path.Reverse();
         return path;
+    }
+
+    public List<GraphNode> FindNodesToDelete()
+    {
+        List<GraphNode> toDelete = new List<GraphNode>();
+        Dictionary<Vector3, bool> visited = new Dictionary<Vector3, bool>();
+        foreach (KeyValuePair<Vector3, GraphNode> mapping in nodes)
+        {
+            if (mapping.Value.neighbors != null)
+            {
+                foreach (GraphNode neighbor in mapping.Value.neighbors)
+                {
+                    foreach (GraphNode nextNeighbor in neighbor.neighbors)
+                    {
+                        bool isColinear = Colinear(mapping.Value, neighbor, nextNeighbor);
+                        if (isColinear == true && neighbor.neighbors.Count == 2)
+                        {
+                            toDelete.Add(neighbor);
+                        }
+                    }
+                }
+            }
+        }
+        return toDelete;
+    }
+
+    public void RemoveNode(GraphNode node)
+    {
+        foreach(KeyValuePair<Vector3,GraphNode> mapping in nodes){
+            if (mapping.Value.Equals(node))
+            {
+                nodes.Remove(mapping.Key);
+            }
+            else
+            {
+                for (int i = 0; i < mapping.Value.neighbors.Count; i++)
+                {
+                    if (mapping.Value.neighbors.Contains(node))
+                    {
+                        mapping.Value.neighbors.Remove(node);
+                    }
+                }
+                //foreach(GraphNode neighbor in mapping.Value.neighbors)
+                //{
+                //    if (neighbor.Equals(node))
+                //    {
+                //        mapping.Value.neighbors.Remove(node);
+                //    }
+                //}
+            }
+        }
+    }
+
+    public bool Colinear(GraphNode first, GraphNode second, GraphNode third)
+    {
+        float a = first.position.x * (second.position.y - third.position.y)+
+                    second.position.x * (third.position.y - first.position.y) +
+                    third.position.x * (first.position.y - second.position.y);
+        if (a == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void SimplifyGraph()
+    {
+        List<GraphNode> toDelete = FindNodesToDelete();
+        foreach (GraphNode node in toDelete)
+        {
+            RemoveNode(node);
+        }
     }
 
 }

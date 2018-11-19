@@ -36,6 +36,15 @@ public class GraphNode : IComparable<GraphNode>
         }
     }
 
+    // Remove neighbor if present
+    public void RemoveNeighbor(GraphNode toRemove)
+    {
+        if (ContainsNeighbor(toRemove))
+        {
+            neighbors.Remove(toRemove);
+        }
+    }
+
     public float GetDistance(GraphNode endNode)
     {
         float dist = Vector3.Distance(position, endNode.position);
