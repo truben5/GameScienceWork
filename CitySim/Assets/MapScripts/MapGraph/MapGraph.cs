@@ -146,27 +146,22 @@ public class MapGraph {
 
     public void RemoveNode(GraphNode node)
     {
-        foreach(KeyValuePair<Vector3,GraphNode> mapping in nodes){
-            if (mapping.Value.Equals(node))
+        Vector3[] keys = new Vector3[nodes.Keys.Count];
+        nodes.Keys.CopyTo(keys, 0);
+        if (nodes.ContainsValue(node))
+        {
+            nodes.Remove(node.position);
+        }
+        for(int i = 0; i < keys.Length; i++)
+        {
+            List<GraphNode> neighborNeighbors = nodes[keys[i]].neighbors;
+            // For each neighbors neighbor
+            for (int j = 0; j < neighborNeighbors.Count; j++)
             {
-                nodes.Remove(mapping.Key);
-            }
-            else
-            {
-                for (int i = 0; i < mapping.Value.neighbors.Count; i++)
+                if (neighborNeighbors.Contains(node))
                 {
-                    if (mapping.Value.neighbors.Contains(node))
-                    {
-                        mapping.Value.neighbors.Remove(node);
-                    }
+                        neighborNeighbors.Remove(node);
                 }
-                //foreach(GraphNode neighbor in mapping.Value.neighbors)
-                //{
-                //    if (neighbor.Equals(node))
-                //    {
-                //        mapping.Value.neighbors.Remove(node);
-                //    }
-                //}
             }
         }
     }
