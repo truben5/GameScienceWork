@@ -29522,7 +29522,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d02b7ec7b24197a48aacadb1bdcbe2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPoints: []
 --- !u!65 &1815366572
 BoxCollider:
   m_ObjectHideFlags: 0
