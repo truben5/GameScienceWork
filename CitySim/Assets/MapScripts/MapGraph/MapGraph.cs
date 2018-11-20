@@ -5,12 +5,13 @@ using System.Linq;
 public class MapGraph {
 
     public Dictionary<Vector3, GraphNode> nodes;
-    //private string savePath;
+    public DictionaryContainer graphContainer;
 
     public MapGraph()
     {
         //this.savePath = Application.persistentDataPath + "/graph.dat";
         nodes = new Dictionary<Vector3, GraphNode>();
+        graphContainer = new DictionaryContainer();
     }
 
     public void AddNode(Vector3 v)
@@ -20,6 +21,7 @@ public class MapGraph {
             //Debug.Log("Trying to add " + v);
             GraphNode vNode = new GraphNode(v);
             nodes.Add(v, vNode);
+            graphContainer.graph.Add(v, vNode);
             //nodes[v] = vNode;
         }
     }
@@ -154,15 +156,20 @@ public class MapGraph {
         }
         for(int i = 0; i < keys.Length; i++)
         {
-            List<GraphNode> neighborNeighbors = nodes[keys[i]].neighbors;
-            // For each neighbors neighbor
-            for (int j = 0; j < neighborNeighbors.Count; j++)
-            {
-                if (neighborNeighbors.Contains(node))
+            //Vector3 vKey = keys[i];
+            //if (nodes.ContainsKey(vKey))
+            //{
+
+                List<GraphNode> neighborNeighbors = nodes[keys[i]].neighbors;
+                // For each neighbors neighbor
+                for (int j = 0; j < neighborNeighbors.Count; j++)
                 {
+                    if (neighborNeighbors.Contains(node))
+                    {
                         neighborNeighbors.Remove(node);
+                    }
                 }
-            }
+            //}
         }
     }
 

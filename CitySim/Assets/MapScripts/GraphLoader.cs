@@ -108,7 +108,7 @@ class GraphLoader : InfrastructureBehaviour
         IsReady = true;
         Debug.Log("Completed Graph Loading");
         Debug.Log("Starting simplifying graph");
-        graph.SimplifyGraph();
+        //graph.SimplifyGraph();
         foreach (KeyValuePair<Vector3, GraphNode> point in graph.nodes)
         {
             wayPoints.Add(point.Value.position);
