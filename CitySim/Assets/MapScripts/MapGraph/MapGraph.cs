@@ -5,13 +5,10 @@ using System.Linq;
 public class MapGraph {
 
     public Dictionary<Vector3, GraphNode> nodes;
-    public DictionaryContainer graphContainer;
 
     public MapGraph()
     {
-        //this.savePath = Application.persistentDataPath + "/graph.dat";
         nodes = new Dictionary<Vector3, GraphNode>();
-        graphContainer = new DictionaryContainer();
     }
 
     public void AddNode(Vector3 v)
@@ -21,7 +18,6 @@ public class MapGraph {
             //Debug.Log("Trying to add " + v);
             GraphNode vNode = new GraphNode(v);
             nodes.Add(v, vNode);
-            graphContainer.graph.Add(v, vNode);
             //nodes[v] = vNode;
         }
     }

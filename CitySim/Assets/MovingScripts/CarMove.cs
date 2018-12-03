@@ -153,7 +153,7 @@ public class CarMove : MonoBehaviour {
         // Vector from current position to relative destination
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
         float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
-        if (newSteer > 12f || newSteer < -12f && currentSpeed > maxSpeed / 2)
+        if (newSteer > 10f || newSteer < -10f && currentSpeed > maxSpeed / 2)
         {
             sharpTurn = true;
         }
@@ -224,7 +224,7 @@ public class CarMove : MonoBehaviour {
         }
         else if (isBraking && currentSpeed > 5 && !sharpTurn)
         {
-            Debug.Log("decelerate");
+            //Debug.Log("decelerate");
             wheelFL.motorTorque = maxDecelTorque;
             wheelFR.motorTorque = maxDecelTorque;
         }
@@ -272,7 +272,7 @@ public class CarMove : MonoBehaviour {
         // Front center sensor
         if (Physics.Raycast(frontSensorPos.position, transform.forward, out hit, sensorLength) && hit.collider.name.Equals("Rear"))
         {
-            Debug.Log("hit rear");
+            //Debug.Log("hit rear");
             slowTraffic = true;
             // Calculate ratio of distance between cars and maxDistance of sensor. 
             distanceRatio = hit.distance / sensorLength;

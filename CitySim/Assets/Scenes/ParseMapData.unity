@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13fffa67725511478eb04b3acc81404, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceFile: Simple
+  resourceFile: ManhattanTip
 --- !u!4 &30418748
 Transform:
   m_ObjectHideFlags: 0
@@ -174,8 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carPopulation: 20
-  roadMaker: {fileID: 30418750}
+  loader: {fileID: 0}
   carPrefab: {fileID: 1046722405630948, guid: e58264f5b20749d449b0d63fd5391e7f, type: 2}
+  v1: {fileID: 0}
+  v2: {fileID: 0}
 --- !u!114 &30418750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 6517b2c0f21b0ec48994608b488df398, type: 2}
+  wayPoints: []
   streetLightPrefab: {fileID: 1257997532625792, guid: 8bbea8d400be3364e80f546c6fe05a2d,
     type: 2}
 --- !u!65 &30418751
@@ -207,8 +210,7 @@ BoxCollider:
 --- !u!114 &30418752
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114968181496897140, guid: b46038b4cd1c370469501f2b78d103c7,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 30418746}
   m_Enabled: 1
@@ -218,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveKey: 293
   map: {fileID: 30418748}
-  folderName: Simple
+  folderName: ManhattanTip
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0

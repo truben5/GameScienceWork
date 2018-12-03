@@ -1455,6 +1455,11 @@ Prefab:
       propertyPath: m_Name
       value: CarPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114227147698721792, guid: e58264f5b20749d449b0d63fd5391e7f,
+        type: 2}
+      propertyPath: maxDistFromCar
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e58264f5b20749d449b0d63fd5391e7f, type: 2}
   m_IsPrefabParent: 0
