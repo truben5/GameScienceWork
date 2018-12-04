@@ -50,6 +50,10 @@ public class StoreMap : MonoBehaviour
             if (mf)
             {
                 string roadName = child.name;
+                if (roadName.Contains("/"))
+                {
+                    roadName = roadName.Replace('/','-');
+                }
                 int tmp = 0;
                 // Storing frequency of road names to create unique mesh names
                 if (dict.ContainsKey(roadName))
@@ -81,7 +85,7 @@ public class StoreMap : MonoBehaviour
         List<KeyValPair> serializedDict = new List<KeyValPair>();
         foreach (KeyValuePair<Vector3, GraphNode> pair in GetComponent<RoadMaker>().graph.nodes)
         {
-            KeyValPair newPair = new KeyValPair(pair.Key, pair.Value.position);
+            KeyValPair newPair = new KeyValPair(pair.Key, pair.Value.position, GetComponent<RoadMaker>().graph);
             serializedDict.Add(newPair);
         }
 

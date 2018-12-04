@@ -10,6 +10,8 @@ class GraphLoader : InfrastructureBehaviour
     [System.NonSerialized]
     public MapGraph graph;
     [System.NonSerialized]
+    public List<KeyValPair> serializeDict;
+    [System.NonSerialized]
     public  List<Vector3> wayPoints = new List<Vector3>();
 
     public bool IsReady { get; private set; }
@@ -162,11 +164,12 @@ class GraphLoader : InfrastructureBehaviour
         graph = new MapGraph();
 
         // Store graph?
-        Debug.Log("storing graph");
+        //Debug.Log("storing graph");
         //StoreGraph();
         
-        LoadGraph();
-        Debug.Log("Completed Graph Loading");
+        LoadNodes();
+        Debug.Log("Completed node Loading");
+        ConnectNeighbors();
         // Debug.Log("Starting simplifying graph");
         //graph.SimplifyGraph();
         //foreach (KeyValuePair<Vector3, GraphNode> point in graph.nodes)
@@ -246,7 +249,7 @@ class GraphLoader : InfrastructureBehaviour
         List<KeyValPair> serializedDict = new List<KeyValPair>();
         foreach (KeyValuePair<Vector3, GraphNode> pair in graph.nodes)
         {
-            KeyValPair newPair = new KeyValPair(pair.Key, pair.Value.position);
+            KeyValPair newPair = new KeyValPair(pair.Key, pair.Value.position, graph);
             serializedDict.Add(newPair);
         }
 
@@ -256,9 +259,9 @@ class GraphLoader : InfrastructureBehaviour
         fs.Close();
     }
 
-    void LoadGraph()
+    void LoadNodes()
     {
-        List<KeyValPair> serializeDict = new List<KeyValPair>();
+        serializeDict = new List<KeyValPair>();
         FileStream fs = new FileStream("Assets/Resources/Graphs/" + map.name, FileMode.Open);
         try
         {
@@ -281,6 +284,18 @@ class GraphLoader : InfrastructureBehaviour
         finally
         {
             fs.Close();
+        }
+    }
+
+    void ConnectNeighbors()
+    {   
+        foreach (KeyValPair pair in serializeDict)
+        {
+            foreach (KeyValPair connections in pair.connections)
+            {
+                Vector3 conKey = new Vector3(connections.keyX, connections.keyY, connections.keyZ);
+                //GraphNodegraph.nodes[];
+            }
         }
     }
 

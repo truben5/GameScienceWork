@@ -14,7 +14,16 @@ public class KeyValPair{
     public float valY;
     public float valZ;
 
-    public KeyValPair(Vector3 key, Vector3 val)
+    public List<KeyValPair> connections;
+
+    public KeyValPair(Vector3 key)
+    {
+        keyX = key.x;
+        keyY = key.y;
+        keyZ = key.z;
+    }
+
+    public KeyValPair(Vector3 key, Vector3 val, MapGraph graph)
     {
         keyX = key.x;
         keyY = key.y;
@@ -23,5 +32,21 @@ public class KeyValPair{
         valX = val.x;
         valY = val.y;
         valZ = val.z;
+
+        connections = new List<KeyValPair>();
+
+        foreach (GraphNode neighbor in graph.nodes[key].neighbors)
+        {
+            // go through each key value pair and store the key
+            foreach (KeyValuePair<Vector3, GraphNode> pair in graph.nodes)
+            {
+                if (pair.Value.Equals(neighbor))
+                {
+                    KeyValPair pseudoConnect = new KeyValPair(pair.Key);
+                    connections.Add(pseudoConnect);
+                    break;
+                }
+            }
+        }
     }
 }
