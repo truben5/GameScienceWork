@@ -197,8 +197,8 @@ class GraphLoader : InfrastructureBehaviour
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
-                graph.nodes[currPos].AddNeighbor(nextNode);
-                graph.nodes[nextPos].AddNeighbor(currNode);
+                graph.nodes[currPos].AddNeighbor(nextPos);
+                graph.nodes[nextPos].AddNeighbor(currPos);
             }
             else if (currI > 1 && currI < maxI)
             {
@@ -210,8 +210,8 @@ class GraphLoader : InfrastructureBehaviour
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
-                graph.nodes[currPos].AddNeighbor(nextNode);
-                graph.nodes[nextPos].AddNeighbor(currNode);
+                graph.nodes[currPos].AddNeighbor(nextPos);
+                graph.nodes[nextPos].AddNeighbor(currPos);
             }
         }
     }
@@ -238,7 +238,7 @@ class GraphLoader : InfrastructureBehaviour
                 Gizmos.DrawWireSphere(point.Value.position, 1f);
                 foreach (var neighbor in graph.nodes[point.Value.position].neighbors)
                 {
-                    Gizmos.DrawLine(point.Value.position, neighbor.position);
+                    Gizmos.DrawLine(point.Value.position, graph.nodes[neighbor].position);
                 }
             }
         }
@@ -267,12 +267,14 @@ class GraphLoader : InfrastructureBehaviour
         {
             BinaryFormatter formatter = new BinaryFormatter();
             serializeDict = (List<KeyValPair>)formatter.Deserialize(fs);
+            //serializeDict.ForEach(x => Debug.Log(x.connections));
             foreach (KeyValPair loaded in serializeDict)
             {
                 Vector3 key = new Vector3(loaded.keyX, loaded.keyY, loaded.keyZ);
                 Vector3 valVec = new Vector3(loaded.valX, loaded.valY, loaded.valZ);
                 //GraphNode value = new GraphNode(valVec);
-                graph.AddNode(key, valVec);
+                GraphNode added = graph.AddNode(key, valVec);
+                wayPoints.Add(added.position);
             }
         }
         catch (System.Runtime.Serialization.SerializationException e)
@@ -288,15 +290,15 @@ class GraphLoader : InfrastructureBehaviour
     }
 
     void ConnectNeighbors()
-    {   
+    {
         foreach (KeyValPair pair in serializeDict)
         {
             foreach (KeyValPair connections in pair.connections)
             {
                 Vector3 conKey = new Vector3(connections.keyX, connections.keyY, connections.keyZ);
-                //GraphNodegraph.nodes[];
+                Debug.Log(conKey);
             }
         }
     }
-
+    
 }

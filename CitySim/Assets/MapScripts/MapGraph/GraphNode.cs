@@ -6,18 +6,18 @@ using UnityEngine;
 public class GraphNode : IComparable<GraphNode>
 {
     public Vector3 position { get; private set; }
-    public List<GraphNode> neighbors { get; private set; }
+    public List<Vector3> neighbors { get; private set; }
 
     public GraphNode(Vector3 v)
     {
         position = v;
-        neighbors = new List<GraphNode>();
+        neighbors = new List<Vector3>();
     }
 
     // Checks if node is already a neigbor
-    public bool ContainsNeighbor(GraphNode checkNode)
+    public bool ContainsNeighbor(Vector3 checkNode)
     {
-        foreach (GraphNode neighbor in neighbors)
+        foreach (Vector3 neighbor in neighbors)
         {
             if (neighbor == checkNode)
             {
@@ -28,7 +28,7 @@ public class GraphNode : IComparable<GraphNode>
     }
 
     // Add neighbor if not present
-    public void AddNeighbor(GraphNode newNode)
+    public void AddNeighbor(Vector3 newNode)
     {
         if (!ContainsNeighbor(newNode))
         {
@@ -37,7 +37,7 @@ public class GraphNode : IComparable<GraphNode>
     }
 
     // Remove neighbor if present
-    public void RemoveNeighbor(GraphNode toRemove)
+    public void RemoveNeighbor(Vector3 toRemove)
     {
         if (ContainsNeighbor(toRemove))
         {

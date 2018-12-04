@@ -11,7 +11,7 @@ public class StoreMap : MonoBehaviour
     public KeyCode saveKey = KeyCode.F12;
     public Transform map;
     public string folderName;
-    private int OSMCount = 0;
+    //private int OSMCount = 0;
     private Dictionary<string, int> dict = new Dictionary<string, int>();
     //public string saveName = selec;
 
@@ -86,6 +86,7 @@ public class StoreMap : MonoBehaviour
         foreach (KeyValuePair<Vector3, GraphNode> pair in GetComponent<RoadMaker>().graph.nodes)
         {
             KeyValPair newPair = new KeyValPair(pair.Key, pair.Value.position, GetComponent<RoadMaker>().graph);
+            newPair.connections.Add(newPair);
             serializedDict.Add(newPair);
         }
 

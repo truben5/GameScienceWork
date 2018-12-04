@@ -35,7 +35,7 @@ public class KeyValPair{
 
         connections = new List<KeyValPair>();
 
-        foreach (GraphNode neighbor in graph.nodes[key].neighbors)
+        foreach (Vector3 neighbor in graph.nodes[key].neighbors)
         {
             // go through each key value pair and store the key
             foreach (KeyValuePair<Vector3, GraphNode> pair in graph.nodes)

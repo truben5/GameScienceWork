@@ -91,9 +91,60 @@ class RoadMaker : InfrastructureBehaviour
                 // Adds current position to graph
                 //graph.AddNode(currPos);
                 //GraphNode currNode = graph.nodes[currPos];
-                wayPoints.Add(p1);
+                //wayPoints.Add(p1);
 
-                UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+
+
+
+                if (way.Lanes == 2)
+                {
+                    //Debug.Log(i);
+                    //GraphNode[] paths = new GraphNode[way.Lanes];
+                    // Split central node into two lane nodes
+                    Vector3 lane1C = currPos - (cross / 2);
+                    Vector3 lane1N = nextPos - (cross / 2);
+
+                    // Check if this is a valid connector to the multilane road
+                    // (key) currPos -> (value) lane1C
+                    // (key) nextPos -> (value) lane1N
+                    // (key) lane1C -> (value) lane1C
+                    // (key) lane1N -> (value) lane1N
+                    bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
+                    if (!validConnector)
+                    {
+                        // If all nodes are present in graph then make sure that the currPos and nextPos key has the value of lane1C and lane1N respectively
+                        if (graph.nodes.ContainsKey(currPos) && graph.nodes.ContainsKey(nextPos) && graph.nodes.ContainsKey(lane1C) && graph.nodes.ContainsKey(lane1N))
+                        {
+                            graph.nodes[currPos] = graph.nodes[lane1C];
+                            graph.nodes[nextPos] = graph.nodes[lane1N];
+                        }
+                        // If not all present, call addNode for all of them. Setting the currPos and nextPos to the value of lane1C and lane1C
+                        else
+                        {
+                            graph.AddNode(lane1C);
+                            graph.AddNode(lane1N);
+                            graph.AddNode(currPos, lane1C);
+                            graph.AddNode(nextPos, lane1N);
+                        }
+                    }
+                    UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
+                    //wayPoints.Add(lane1C);
+
+                    Vector3 lane2C = currPos + (cross / 2);
+                    Vector3 lane2N = nextPos + (cross / 2);
+                    UpdateGraph(lane2C, lane2N, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(lane2C);
+                }
+                else
+                {
+                    UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(currPos);
+                }
+
+
+
+
+                //UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
 
 
                 // Add node locations to stoplights
@@ -188,19 +239,36 @@ class RoadMaker : InfrastructureBehaviour
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
-                graph.nodes[currPos].AddNeighbor(nextNode);
-                graph.nodes[nextPos].AddNeighbor(currNode);
+                graph.nodes[currPos].AddNeighbor(nextPos);
+                graph.nodes[nextPos].AddNeighbor(currPos);
             }
             else if (currI > 1 && currI < maxI)
             {
+                //graph.AddNode(currPos);
+                if (!graph.nodes.ContainsKey(currPos))
+                {
+                    graph.AddNode(currPos);
+                }
                 graph.AddNode(nextPos);
                 currNode = graph.nodes[currPos];
                 nextNode = graph.nodes[nextPos];
 
-                graph.nodes[currPos].AddNeighbor(nextNode);
-                graph.nodes[nextPos].AddNeighbor(currNode);
+                graph.nodes[currPos].AddNeighbor(nextPos);
+                graph.nodes[nextPos].AddNeighbor(currPos);
             }
         }
+    }
+
+
+    // Check if connector to multilane road merges correctly
+    // Makes sure the key is the multilane node but the location is the outer lane
+    private bool CheckMultiLaneConnection(Vector3 key, Vector3 nodeLocation)
+    {
+        if (!graph.nodes.ContainsKey(key) || graph.nodes[key].position != nodeLocation)
+        {
+            return false;
+        }
+        return true;
     }
 
     void OnDrawGizmos()
@@ -214,7 +282,7 @@ class RoadMaker : InfrastructureBehaviour
                 Gizmos.DrawWireSphere(point.Key, 1f);
                 foreach (var neighbor in graph.nodes[point.Key].neighbors)
                 {
-                    Gizmos.DrawLine(point.Key, neighbor.position);
+                    Gizmos.DrawLine(point.Key, graph.nodes[neighbor].position);
                 }
             }
 

@@ -22,11 +22,12 @@ public class MapGraph {
         }
     }
 
-    public void AddNode(Vector3 key, Vector3 pair)
+    public GraphNode AddNode(Vector3 key, Vector3 pair)
     {
+        GraphNode newNode = null;
         if (!nodes.ContainsKey(key))
         {
-            GraphNode newNode = new GraphNode(pair);
+            newNode = new GraphNode(pair);
             nodes.Add(key,newNode);
         }
         //else if(!nodes.ContainsKey(pair))
@@ -39,6 +40,7 @@ public class MapGraph {
         //{
         //    nodes[key] = nodes[pair];
         //}
+        return newNode;
     }
 
     public List<Vector3> ShortestPath(GraphNode start, GraphNode end)
@@ -80,22 +82,22 @@ public class MapGraph {
             // g is the cost to get to the current node nad heuristic is euclidian distance between node youre looking at and goal
             // f = g + h
             // Loop through sorted list of neighbors by ending distance
-            foreach (GraphNode neighbor in node.neighbors.OrderBy(x => endDist[x]))
+            foreach (Vector3 neighbor in node.neighbors.OrderBy(x => endDist[nodes[x]]))
             {
                 //Debug.Log("neighbor is: " + neighbor.position);
-                if (visited[neighbor] == true)
+                if (visited[nodes[neighbor]] == true)
                 {
                     continue;
                 }
-                float connectionDist = Vector3.Distance(neighbor.position, node.position);
-                if (!startDist.ContainsKey(neighbor) || startDist[node] + connectionDist < startDist[neighbor])
+                float connectionDist = Vector3.Distance(nodes[neighbor].position, node.position);
+                if (!startDist.ContainsKey(nodes[neighbor]) || startDist[node] + connectionDist < startDist[nodes[neighbor]])
                 {
-                    startDist[neighbor] = startDist[node] + connectionDist;
-                    closest[neighbor] = node;
+                    startDist[nodes[neighbor]] = startDist[node] + connectionDist;
+                    closest[nodes[neighbor]] = node;
 
-                    if (!queue.Contains(neighbor))
+                    if (!queue.Contains(nodes[neighbor]))
                     {
-                        queue.Add(neighbor);
+                        queue.Add(nodes[neighbor]);
                     }
                 }
 
@@ -118,7 +120,7 @@ public class MapGraph {
         return path;
     }
 
-    public List<GraphNode> FindNodesToDelete()
+   /* public List<GraphNode> FindNodesToDelete()
     {
         List<GraphNode> toDelete = new List<GraphNode>();
         Dictionary<Vector3, bool> visited = new Dictionary<Vector3, bool>();
@@ -141,6 +143,7 @@ public class MapGraph {
         }
         return toDelete;
     }
+    
 
     public void RemoveNode(GraphNode node)
     {
@@ -189,5 +192,5 @@ public class MapGraph {
             RemoveNode(node);
         }
     }
-
+    */
 }
