@@ -45,7 +45,7 @@ public class StoreMap : MonoBehaviour
         // Save all procedural meshes
         foreach (Transform child in transform)
         {
-            Debug.Log("Trying to save");
+            Debug.Log("Beginning to save road meshes");
             var mf = child.GetComponent<MeshFilter>();
             if (mf)
             {
@@ -71,12 +71,13 @@ public class StoreMap : MonoBehaviour
                     addOn = tmp.ToString();
                 }
                 var savePath = "Assets/Assets/Maps/" + folderName + "/" + roadName + addOn + ".asset";
-                Debug.Log("Saved Mesh to:" + savePath);
+                //Debug.Log("Saved Mesh to:" + savePath);
                 AssetDatabase.CreateAsset(mf.mesh, savePath);
-                Debug.Log("successful save");
+                //Debug.Log("successful save");
             }
 
         }
+        Debug.Log("Successfully stored map");
         PrefabUtility.ReplacePrefab(gameObject, emptyPrefab);
     }
      

@@ -18,167 +18,169 @@ class GraphLoader : InfrastructureBehaviour
 
     private int OSMCount = 0;
 
-    //IEnumerator Start()
-    //{
-    //    //Debug.Log(map.name);
-    //    graph = new MapGraph();
-
-    //    while (!map.IsReady)
-    //    {
-    //        yield return null;
-    //    }
-    //    // Create game object under map to store streets
-    //    //GameObject allStreets = new GameObject();
-    //    //allStreets.transform.parent = map.transform;
-    //    //allStreets.name = "Roads";
-    //    // TODO: Add Lanes
-    //    foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
-    //    {
-    //        Vector3 localOrigin = GetCenter(way);
-
-    //        for (int i = 1; i < way.NodeIDs.Count; i++)
-    //        {
-    //            OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
-    //            OSMNode p2 = map.nodes[way.NodeIDs[i]];
-
-
-    //            Vector3 s1 = p1 - localOrigin;
-    //            Vector3 s2 = p2 - localOrigin;
-    //            //Vector3 s3 = Vector3.zero;
-
-    //            //int avg = 1;
-    //            Vector3 diff = Vector3.zero;
-    //            diff = (s2 - s1).normalized;
-
-    //            //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
-    //            var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
-
-    //            Vector3 v1 = s1 + cross;
-    //            Vector3 v2 = s1 - cross;
-    //            Vector3 v3 = s2 + cross;
-    //            Vector3 v4 = s2 - cross;
-
-    //            // calculates current and next position vector
-    //            Vector3 currPos = p1 - map.bounds.Center;
-    //            Vector3 nextPos = p2 - map.bounds.Center;
-
-    //            if (way.Lanes ==2)
-    //            {
-    //                //Debug.Log(i);
-    //                //GraphNode[] paths = new GraphNode[way.Lanes];
-    //                // Split central node into two lane nodes
-    //                Vector3 lane1C = currPos - (cross / 2);
-    //                Vector3 lane1N = nextPos - (cross / 2);
-
-    //                // Check if this is a valid connector to the multilane road
-    //                // (key) currPos -> (value) lane1C
-    //                // (key) nextPos -> (value) lane1N
-    //                // (key) lane1C -> (value) lane1C
-    //                // (key) lane1N -> (value) lane1N
-    //                bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
-    //                if (!validConnector)
-    //                {
-    //                    // If all nodes are present in graph then make sure that the currPos and nextPos key has the value of lane1C and lane1N respectively
-    //                    if (graph.nodes.ContainsKey(currPos) && graph.nodes.ContainsKey(nextPos) && graph.nodes.ContainsKey(lane1C) && graph.nodes.ContainsKey(lane1N))
-    //                    {
-    //                        graph.nodes[currPos] = graph.nodes[lane1C];
-    //                        graph.nodes[nextPos] = graph.nodes[lane1N];
-    //                    }
-    //                    // If not all present, call addNode for all of them. Setting the currPos and nextPos to the value of lane1C and lane1C
-    //                    else
-    //                    {
-    //                        graph.AddNode(lane1C);
-    //                        graph.AddNode(lane1N);
-    //                        graph.AddNode(currPos, lane1C);
-    //                        graph.AddNode(nextPos, lane1N);
-    //                    }
-    //                }
-    //                UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
-    //                //wayPoints.Add(lane1C);
-
-    //                Vector3 lane2C = currPos + (cross / 2);
-    //                Vector3 lane2N = nextPos + (cross / 2);
-    //                UpdateGraph(lane2C, lane2N, i, way.NodeIDs.Count, 2);
-    //                wayPoints.Add(lane2C);
-    //            }
-    //            else
-    //            {
-    //                UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
-    //                wayPoints.Add(currPos);
-    //            }
-    //            //yield return null;
-    //        }
-
-    //        yield return null;
-
-    //    }
-
-    //    //foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
-    //    //{
-    //    //    Vector3 localOrigin = GetCenter(way);
-
-    //    //    for (int i = 1; i < way.NodeIDs.Count; i++)
-    //    //    {
-    //    //        OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
-    //    //        OSMNode p2 = map.nodes[way.NodeIDs[i]];
-
-
-    //    //        Vector3 s1 = p1 - localOrigin;
-    //    //        Vector3 s2 = p2 - localOrigin;
-    //    //        //Vector3 s3 = Vector3.zero;
-
-    //    //        //int avg = 1;
-    //    //        Vector3 diff = Vector3.zero;
-    //    //        diff = (s2 - s1).normalized;
-
-    //    //        //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
-    //    //        var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
-
-    //    //        Vector3 v1 = s1 + cross;
-    //    //        Vector3 v2 = s1 - cross;
-    //    //        Vector3 v3 = s2 + cross;
-    //    //        Vector3 v4 = s2 - cross;
-
-    //    //        // calculates current and next position vector
-    //    //        Vector3 currPos = p1 - map.bounds.Center;
-    //    //        Vector3 nextPos = p2 - map.bounds.Center;
-
-
-    //    //        //Debug.Log(i);
-    //    //        //GraphNode[] paths = new GraphNode[way.Lanes];
-    //    //        // Split central node into two lane nodes
-    //    //        Vector3 lane1C = currPos - (cross / 2);
-    //    //        Vector3 lane1N = nextPos - (cross / 2);
-
-    //    //        bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
-
-    //    //        UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
-    //    //        wayPoints.Add(currPos);
-    //    //        //yield return null;
-    //    //    }
-    //    //    yield return null;
-    //    //}
-    private void Start()
+    IEnumerator Start()
     {
-
+        //Debug.Log(map.name);
         graph = new MapGraph();
 
-        // Store graph?
-        //Debug.Log("storing graph");
-        //StoreGraph();
-        
-        LoadNodes();
-        Debug.Log("Completed node Loading");
-        ConnectNeighbors();
-        // Debug.Log("Starting simplifying graph");
-        //graph.SimplifyGraph();
-        //foreach (KeyValuePair<Vector3, GraphNode> point in graph.nodes)
-        //{
-        //wayPoints.Add(point.Value.position);
-        //}
-        //Debug.Log(graph.nodes.Count);
+        while (!map.IsReady)
+        {
+            yield return null;
+        }
+        // Create game object under map to store streets
+        //GameObject allStreets = new GameObject();
+        //allStreets.transform.parent = map.transform;
+        //allStreets.name = "Roads";
+        // TODO: Add Lanes
+        foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
+        {
+            Vector3 localOrigin = GetCenter(way);
+
+            for (int i = 1; i < way.NodeIDs.Count; i++)
+            {
+                OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
+                OSMNode p2 = map.nodes[way.NodeIDs[i]];
+
+
+                Vector3 s1 = p1 - localOrigin;
+                Vector3 s2 = p2 - localOrigin;
+                //Vector3 s3 = Vector3.zero;
+
+                //int avg = 1;
+                Vector3 diff = Vector3.zero;
+                diff = (s2 - s1).normalized;
+
+                //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
+                var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
+
+                Vector3 v1 = s1 + cross;
+                Vector3 v2 = s1 - cross;
+                Vector3 v3 = s2 + cross;
+                Vector3 v4 = s2 - cross;
+
+                // calculates current and next position vector
+                Vector3 currPos = p1 - map.bounds.Center;
+                Vector3 nextPos = p2 - map.bounds.Center;
+
+                if (way.Lanes == 2)
+                {
+                    //Debug.Log(i);
+                    //GraphNode[] paths = new GraphNode[way.Lanes];
+                    // Split central node into two lane nodes
+                    Vector3 lane1C = currPos - (cross / 2);
+                    Vector3 lane1N = nextPos - (cross / 2);
+
+                    // Check if this is a valid connector to the multilane road
+                    // (key) currPos -> (value) lane1C
+                    // (key) nextPos -> (value) lane1N
+                    // (key) lane1C -> (value) lane1C
+                    // (key) lane1N -> (value) lane1N
+                    bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
+                    if (!validConnector)
+                    {
+                        // If all nodes are present in graph then make sure that the currPos and nextPos key has the value of lane1C and lane1N respectively
+                        if (graph.nodes.ContainsKey(currPos) && graph.nodes.ContainsKey(nextPos) && graph.nodes.ContainsKey(lane1C) && graph.nodes.ContainsKey(lane1N))
+                        {
+                            graph.nodes[currPos] = graph.nodes[lane1C];
+                            graph.nodes[nextPos] = graph.nodes[lane1N];
+                        }
+                        // If not all present, call addNode for all of them. Setting the currPos and nextPos to the value of lane1C and lane1C
+                        else
+                        {
+                            graph.AddNode(lane1C);
+                            graph.AddNode(lane1N);
+                            graph.AddNode(currPos, lane1C);
+                            graph.AddNode(nextPos, lane1N);
+                        }
+                    }
+                    UpdateGraph(lane1C, lane1N, i, way.NodeIDs.Count, 2);
+                    //wayPoints.Add(lane1C);
+
+                    Vector3 lane2C = currPos + (cross / 2);
+                    Vector3 lane2N = nextPos + (cross / 2);
+                    UpdateGraph(lane2C, lane2N, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(lane2C);
+                }
+                else
+                {
+                    UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+                    wayPoints.Add(currPos);
+                }
+                //yield return null;
+            }
+
+            yield return null;
+
+        }
+
+        foreach (var way in map.ways.FindAll((w) => { return w.IsRoad && !w.IsRailway; }))
+        {
+            Vector3 localOrigin = GetCenter(way);
+
+            for (int i = 1; i < way.NodeIDs.Count; i++)
+            {
+                OSMNode p1 = map.nodes[way.NodeIDs[i - 1]];
+                OSMNode p2 = map.nodes[way.NodeIDs[i]];
+
+
+                Vector3 s1 = p1 - localOrigin;
+                Vector3 s2 = p2 - localOrigin;
+                //Vector3 s3 = Vector3.zero;
+
+                //int avg = 1;
+                Vector3 diff = Vector3.zero;
+                diff = (s2 - s1).normalized;
+
+                //Vector3 diff = ((s2 - s1) + (s3 - s2) / avg).normalized;
+                var cross = Vector3.Cross(diff, Vector3.up) * 4.0f * way.Lanes; // Add lanes here
+
+                Vector3 v1 = s1 + cross;
+                Vector3 v2 = s1 - cross;
+                Vector3 v3 = s2 + cross;
+                Vector3 v4 = s2 - cross;
+
+                // calculates current and next position vector
+                Vector3 currPos = p1 - map.bounds.Center;
+                Vector3 nextPos = p2 - map.bounds.Center;
+
+
+                //Debug.Log(i);
+                //GraphNode[] paths = new GraphNode[way.Lanes];
+                // Split central node into two lane nodes
+                Vector3 lane1C = currPos - (cross / 2);
+                Vector3 lane1N = nextPos - (cross / 2);
+
+                bool validConnector = CheckMultiLaneConnection(currPos, lane1C);
+
+                UpdateGraph(currPos, nextPos, i, way.NodeIDs.Count, 2);
+                wayPoints.Add(currPos);
+                //yield return null;
+            }
+            yield return null;
+        }
         IsReady = true;
     }
+    //    private void Start()
+    //{
+
+    //    graph = new MapGraph();
+
+    //    // Store graph?
+    //    //Debug.Log("storing graph");
+    //    //StoreGraph();
+        
+    //    LoadNodes();
+    //    Debug.Log("Completed node Loading");
+    //    ConnectNeighbors();
+    //    // Debug.Log("Starting simplifying graph");
+    //    //graph.SimplifyGraph();
+    //    //foreach (KeyValuePair<Vector3, GraphNode> point in graph.nodes)
+    //    //{
+    //    //wayPoints.Add(point.Value.position);
+    //    //}
+    //    //Debug.Log(graph.nodes.Count);
+    //    IsReady = true;
+    //}
 
     private void UpdateGraph(Vector3 currPos, Vector3 nextPos, int currI, int maxI, int direction)
     {
@@ -227,22 +229,22 @@ class GraphLoader : InfrastructureBehaviour
         return true;
     }
 
-    void OnDrawGizmos()
-    {
-        if (IsReady == true)
-        {
-            //Debug.Log("making gizmos");
-            Gizmos.color = Color.red;
-            foreach (var point in graph.nodes)
-            {
-                Gizmos.DrawWireSphere(point.Value.position, 1f);
-                foreach (var neighbor in graph.nodes[point.Value.position].neighbors)
-                {
-                    Gizmos.DrawLine(point.Value.position, graph.nodes[neighbor].position);
-                }
-            }
-        }
-    }
+    //void OnDrawGizmos()
+    //{
+    //    if (IsReady == true)
+    //    {
+    //        //Debug.Log("making gizmos");
+    //        Gizmos.color = Color.red;
+    //        foreach (var point in graph.nodes)
+    //        {
+    //            Gizmos.DrawWireSphere(point.Value.position, 1f);
+    //            foreach (var neighbor in graph.nodes[point.Value.position].neighbors)
+    //            {
+    //                Gizmos.DrawLine(point.Value.position, graph.nodes[neighbor].position);
+    //            }
+    //        }
+    //    }
+    //}
 
     void StoreGraph()
     {

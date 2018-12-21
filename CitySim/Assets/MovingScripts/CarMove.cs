@@ -39,10 +39,10 @@ public class CarMove : MonoBehaviour {
     private bool slowTraffic = false;
     //private float maxTrafficBuffer;
 
-    public WheelCollider wheelFL;
-    public WheelCollider wheelFR;
     public WheelCollider wheelRL;
     public WheelCollider wheelRR;
+    public WheelCollider wheelFL;
+    public WheelCollider wheelFR;
 
     public Vector3 centerOfMass;
 
@@ -81,6 +81,7 @@ public class CarMove : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
         navMeshAgent.transform.position = navMeshAgent.nextPosition;
         CheckCarDistance();
         CheckWayPointDistance();
@@ -114,7 +115,6 @@ public class CarMove : MonoBehaviour {
 
         // If very close to waypoint then set destination to next waypoint. Stop if reached destination
         else if (Vector3.Distance(navMeshAgent.transform.position, wayPoints[currPoint]) < 4.0f)
-        //if (Vector3.Distance(navMeshAgent.transform.position, destination) < 3.0f)
         {
             currPoint++;
             if (currPoint == totalPoints)
@@ -135,7 +135,6 @@ public class CarMove : MonoBehaviour {
         if (carDist > maxDistFromCar)
         {
             navMeshAgent.velocity = navMeshAgent.velocity / 1.5f;
-            //navMeshAgent.velocity = GetComponent<Rigidbody>().velocity;
             navMeshAgent.speed = maxNavSpeed / 1.5f;
         }
         // If distance to car is less than the allowed min distances then speed up navMeshAgents
@@ -147,12 +146,13 @@ public class CarMove : MonoBehaviour {
         }
     }
 
+    // Steering function
     private void Steer()
     {
         Vector3 relativeDest = navMeshAgent.nextPosition;
         // Vector from current position to relative destination
         Vector3 relativeVect = transform.InverseTransformPoint(relativeDest);
-        float newSteer = -(relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
+        float newSteer = (relativeVect.x / relativeVect.magnitude) * maxSteerAngle;
         if (newSteer > 10f || newSteer < -10f && currentSpeed > maxSpeed / 2)
         {
             sharpTurn = true;
@@ -166,18 +166,13 @@ public class CarMove : MonoBehaviour {
         //navMeshAgent.Move(relativeVect);
     }
 
+    // Movement function
     private void Drive()
     {
         // calculate current speed
         currentSpeed = 2 * Mathf.PI * wheelFL.radius * wheelFL.rpm * 60 / 1000;
         // Reset counter if hit 2 triggers
         triggerCount = triggerCount % 2;
-        //Debug.Log(triggerCount);
-        //Debug.Log("Current speed is: " + currentSpeed);
-        //Debug.Log("isbrake is " + isBraking);
-        //Debug.Log(currentSpeed);
-        //Debug.Log(inIntersection);
-        //Debug.Log(slowTraffic);
         if (inIntersection && triggerCount == 1)
         {
             //Debug.Log("In intersection at red light, slow down");
@@ -276,7 +271,7 @@ public class CarMove : MonoBehaviour {
             slowTraffic = true;
             // Calculate ratio of distance between cars and maxDistance of sensor. 
             distanceRatio = hit.distance / sensorLength;
-            Debug.Log(distanceRatio);
+            //Debug.Log(distanceRatio);
             Debug.DrawLine(frontSensorPos.position, hit.point);
         }
 
@@ -312,10 +307,22 @@ public class CarMove : MonoBehaviour {
         //    Debug.DrawLine(sensorStartingPos, hit.point);
         //}
 
-        if (hit.collider == null|| !hit.collider.name.Equals("Rear"))
+        if (hit.collider == null || !hit.collider.name.Equals("Rear"))
         {
             slowTraffic = false;
         }
-
     }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    for(int i = 0; i < wayPoints.Count;i++)
+    //    {
+    //        Gizmos.DrawWireSphere(wayPoints[i], 1f);
+    //        if (i < wayPoints.Count-1)
+    //        {
+    //            Gizmos.DrawLine(wayPoints[i], wayPoints[i+1]);
+    //        }
+    //    }
+    //}
+
 }
