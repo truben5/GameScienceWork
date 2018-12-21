@@ -15,5 +15,9 @@ Importing OpenStreetMaps data
 
 Traffic Simulation
 1. Place map prefab in new scene and remove the Road Maker component
-2. In Populate Streets component input the number of cars for the simulation under Car Population
-3. Run the scene and wait (The number of cars may affect the wait time. Cars will need a few moments to orient themselves in the right direction)
+2. Reset position of map to 0,0,0
+3. Attach Graph Loader and Populate Streets component from Assets/MapScripts
+4. Drag Graph Loader from map into the Loader slot in the Populate Streets component
+5. Drag car prefab from Assets/Assets/TrafficPrefabs into Car Prefab slot in Populate Streets
+6. In Populate Streets component input the number of cars for the simulation under Car Population
+7. Run the scene and wait (The number of cars may affect the wait time. Cars will need a few moments to orient themselves in the right direction)
