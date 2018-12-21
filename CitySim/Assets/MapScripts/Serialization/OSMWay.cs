@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
-class OSMWay : BaseOSM
+public class OSMWay : BaseOSM
 {
     public ulong ID { get; private set; }
 

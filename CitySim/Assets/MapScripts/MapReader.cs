@@ -2,7 +2,7 @@
 using System.Xml;
 using UnityEngine;
 
-class MapReader : MonoBehaviour
+public class MapReader : MonoBehaviour
 {
     [HideInInspector]
     public Dictionary<ulong, OSMNode> nodes;

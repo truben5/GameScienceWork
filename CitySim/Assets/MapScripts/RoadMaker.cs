@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
-class RoadMaker : InfrastructureBehaviour
+public class RoadMaker : InfrastructureBehaviour
 { 
     public Material roadMaterial;
 

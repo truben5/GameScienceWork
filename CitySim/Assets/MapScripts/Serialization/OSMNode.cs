@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using UnityEngine;
 
-class OSMNode : BaseOSM
+public class OSMNode : BaseOSM
 {
     public ulong ID { get; private set; }
 

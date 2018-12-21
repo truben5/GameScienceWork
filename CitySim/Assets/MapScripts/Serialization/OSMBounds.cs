@@ -1,7 +1,7 @@
 ﻿using System.Xml;
 using UnityEngine;
 
-class OSMBounds : BaseOSM
+public class OSMBounds : BaseOSM
 {
 
     public float MinLat { get; private set; }

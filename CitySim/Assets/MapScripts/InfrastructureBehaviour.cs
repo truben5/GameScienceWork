@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(MapReader))]
-abstract class InfrastructureBehaviour : MonoBehaviour
+public abstract class InfrastructureBehaviour : MonoBehaviour
 {
-    protected MapReader map;
+    public MapReader map;
 
     void Awake()
     {
         map = GetComponent<MapReader>();
     }
 
-    protected Vector3 GetCenter(OSMWay way)
+    public Vector3 GetCenter(OSMWay way)
     {
         Vector3 total = Vector3.zero;
 
